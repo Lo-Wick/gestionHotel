@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails Chambre | Célestia Hotel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-icon">C</div>
+                <span>CÉLESTIA <b>HOTEL</b></span>
+            </a>
+            <div class="navbar-nav">
+                <a href="index.html">Accueil</a>
+                <a href="chambres.html" class="active">Nos Chambres</a>
+                <a href="reservation.html">Réserver</a>
+            </div>
+            <div class="navbar-actions" id="auth-links"></div>
+        </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container section" id="room-detail">
+            <div class="spinner"></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">CÉLESTIA <span>HOTEL</span></div>
+                    <p>Luxe, calme et volupté. L'adresse de référence pour vos séjours d'affaires et de loisirs.</p>
+                </div>
+                <div>
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="chambres.html">Chambres</a></li>
+                        <li><a href="reservation.html">Réservation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</li>
+                        <li><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</li>
+                        <li><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
+                <div class="flex gap-6">
+                    <a href="#">Mentions Légales</a>
+                    <a href="#">Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/reservations.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => Booking.initDetail());
+    </script>
+</body>
+
+</html>

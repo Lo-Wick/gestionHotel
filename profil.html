@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil | Célestia Hotel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-icon">C</div>
+                <span>CÉLESTIA <b>HOTEL</b></span>
+            </a>
+            <div class="navbar-nav">
+                <a href="index.html">Accueil</a>
+                <a href="chambres.html">Nos Chambres</a>
+                <a href="reservation.html">Réserver</a>
+                <div class="navbar-actions" id="auth-links"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container section">
+            <div class="flex-between mb-8">
+                <div>
+                    <h1>Bienvenue, <span id="user-name-title">...</span></h1>
+                    <p class="text-secondary">Gérez vos informations et consultez vos réservations.</p>
+                </div>
+                <button class="btn btn-outline" id="dark-mode-toggle-btn">🌙 Mode Sombre</button>
+            </div>
+
+            <div class="grid grid-3 gap-8">
+                <!-- Sidebar Profil -->
+                <div class="col-span-1">
+                    <div class="card p-6">
+                        <div class="text-center mb-6">
+                            <div
+                                style="width: 80px; height: 80px; background: var(--color-beige); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items:center; justify-content:center; font-size: 2rem;">
+                                <span class="material-symbols-outlined">person</span>
+                            </div>
+                            <h3 id="user-full-name">...</h3>
+                            <p class="text-xs text-secondary" id="user-email-text">...</p>
+                        </div>
+                        <div class="admin-sidebar-nav">
+                            <button class="tab active" data-target="reservations-tab"><span
+                                    class="material-symbols-outlined">calendar_today</span> Mes Réservations</button>
+                            <button class="tab" data-target="profile-tab"><span
+                                    class="material-symbols-outlined">settings</span> Modifier mon profil</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Profil -->
+                <div class="grid-span-2">
+                    <div id="reservations-tab" class="tab-content active">
+                        <div class="table-wrapper">
+                            <div class="table-header">
+                                <h3>Mes Réservations</h3>
+                            </div>
+                            <table id="my-reservations-table">
+                                <thead>
+                                    <tr>
+                                        <th>Chambre</th>
+                                        <th>Dates</th>
+                                        <th>Statut</th>
+                                        <th>Total</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Loaded via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="profile-tab" class="tab-content">
+                        <div class="card p-8">
+                            <h3>Modifier mes informations</h3>
+                            <form id="profile-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Prénom</label>
+                                        <input type="text" name="prenom" id="prof-prenom" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Nom</label>
+                                        <input type="text" name="nom" id="prof-nom" class="form-input">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" name="email" id="prof-email" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Téléphone</label>
+                                    <input type="tel" name="telephone" id="prof-tel" class="form-input">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                            </form>
+
+                            <hr class="divider">
+
+                            <h3>Changer mon mot de passe</h3>
+                            <form id="password-form">
+                                <div class="form-group">
+                                    <label class="form-label">Mot de passe actuel</label>
+                                    <div style="position:relative;">
+                                        <input type="password" name="current_password" id="prof-curr"
+                                            class="form-input">
+                                        <button type="button" class="btn-toggle-password"
+                                            onclick="App.togglePassword('prof-curr', this)"><span
+                                                class="material-symbols-outlined">visibility</span></button>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Nouveau mot de passe</label>
+                                        <div style="position:relative;">
+                                            <input type="password" name="new_password" id="prof-new" class="form-input">
+                                            <button type="button" class="btn-toggle-password"
+                                                onclick="App.togglePassword('prof-new', this)"><span
+                                                    class="material-symbols-outlined">visibility</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Confirmer</label>
+                                        <div style="position:relative;">
+                                            <input type="password" name="confirm_password" id="prof-conf"
+                                                class="form-input">
+                                            <button type="button" class="btn-toggle-password"
+                                                onclick="App.togglePassword('prof-conf', this)"><span
+                                                    class="material-symbols-outlined">visibility</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-outline">Mettre à jour le mot de passe</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">CÉLESTIA <span>HOTEL</span></div>
+                    <p>Luxe, calme et volupté. L'adresse de référence pour vos séjours d'affaires et de loisirs.</p>
+                </div>
+                <div>
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="chambres.html">Chambres</a></li>
+                        <li><a href="reservation.html">Réservation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</li>
+                        <li><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</li>
+                        <li><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
+                <div class="flex gap-6">
+                    <a href="#">Mentions Légales</a>
+                    <a href="#">Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const response = await API.get('auth.php', { action: 'profile' });
+            if (!response.success) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const user = response.user;
+            document.getElementById('user-name-title').textContent = user.prenom;
+            document.getElementById('user-full-name').textContent = `${user.prenom} ${user.nom}`;
+            document.getElementById('user-email-text').textContent = user.email;
+
+            // Fill form
+            document.getElementById('prof-prenom').value = user.prenom;
+            document.getElementById('prof-nom').value = user.nom;
+            document.getElementById('prof-email').value = user.email;
+            document.getElementById('prof-tel').value = user.telephone;
+
+            // Load reservations
+            loadMyReservations();
+
+            // Tabs
+            document.querySelectorAll('.tab').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById(btn.dataset.target).classList.add('active');
+                });
+            });
+
+            // Update profile
+            validation.setupForm('profile-form', async (data) => {
+                const res = await API.post('auth.php?action=updateProfile', data);
+                if (res.success) notify.success(res.message);
+                else notify.error(res.error);
+            });
+
+            // Dark mode toggle in profile
+            const darkToggleBtn = document.getElementById('dark-mode-toggle-btn');
+            darkToggleBtn.addEventListener('click', () => {
+                const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                darkToggleBtn.textContent = theme === 'dark' ? '☀️ Mode Clair' : '🌙 Mode Sombre';
+            });
+            darkToggleBtn.textContent = localStorage.getItem('theme') === 'dark' ? '☀️ Mode Clair' : '🌙 Mode Sombre';
+        });
+
+        async function loadMyReservations() {
+            const res = await API.get('reservations.php', { action: 'list' });
+            if (res.success) {
+                const tbody = document.querySelector('#my-reservations-table tbody');
+                if (res.data.reservations.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center p-8">Aucune réservation pour le moment.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = res.data.reservations.map(r => `
+                    <tr>
+                        <td>
+                            <b>${r.type}</b><br>
+                            <small class="text-secondary">N°${r.numero}</small>
+                        </td>
+                        <td>
+                            <span class="text-xs">Du ${new Date(r.date_debut).toLocaleDateString()}</span><br>
+                            <span class="text-xs">au ${new Date(r.date_fin).toLocaleDateString()}</span>
+                        </td>
+                        <td><span class="badge ${getStatutBadge(r.statut)}">${r.statut}</span></td>
+                        <td><b>${r.montant_total} €</b></td>
+                        <td>
+                            <div class="flex gap-2">
+                                <a href="panier.html?id=${r.id_reservation}" class="btn btn-sm btn-ghost">Voir</a>
+                                ${r.statut === 'En attente' ? `<button class="btn btn-sm btn-ghost text-danger" onclick="cancelBooking(${r.id_reservation})">Annuler</button>` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function getStatutBadge(statut) {
+            switch (statut) {
+                case 'Confirmée': return 'badge-success';
+                case 'Annulée': return 'badge-error';
+                case 'Terminée': return 'badge-info';
+                default: return 'badge-warning';
+            }
+        }
+
+        async function cancelBooking(id) {
+            modal.confirm('Annuler la réservation', 'Voulez-vous vraiment annuler cette réservation ? Attention: annulation gratuite jusqu\'à 48h avant le séjour.', async () => {
+                const res = await API.post('reservations.php?action=annuler', { id });
+                if (res.success) {
+                    notify.success(res.message);
+                    loadMyReservations();
+                } else {
+                    notify.error(res.error);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin | Célestia Hotel</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/dark-mode.css">
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-brand">CÉLESTIA ADMIN</div>
+
+            <div class="admin-sidebar-section">Menu Principal</div>
+            <nav class="admin-sidebar-nav">
+                <a href="index.html" class="active"><span class="material-symbols-outlined">analytics</span> Tableau de bord</a>
+                <a href="chambres.html"><span class="material-symbols-outlined">hotel</span> Chambres</a>
+                <a href="reservations.html"><span class="material-symbols-outlined">calendar_month</span> Réservations</a>
+                <a href="clients.html"><span class="material-symbols-outlined">group</span> Clients</a>
+                <a href="paiements.html"><span class="material-symbols-outlined">payments</span> Paiements</a>
+            </nav>
+
+            <div class="admin-sidebar-section">Compte</div>
+            <nav class="admin-sidebar-nav">
+                <a href="../profil.html"><span class="material-symbols-outlined">person</span> Mon Profil</a>
+                <a href="../index.html">🌐 Voir le site</a>
+                <button id="admin-logout" class="btn btn-ghost btn-block text-left" style="padding-left: 24px;"><span class="material-symbols-outlined">door_front</span>
+                    Déconnexion</button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-page-header">
+                <h1>Tableau de Bord</h1>
+                <p>Bienvenue dans l'interface d'administration du Célestia Hotel.</p>
+            </header>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-4 gap-6 mb-8" id="stats-grid">
+                <div class="skeleton" style="height: 120px;"></div>
+                <div class="skeleton" style="height: 120px;"></div>
+                <div class="skeleton" style="height: 120px;"></div>
+                <div class="skeleton" style="height: 120px;"></div>
+            </div>
+
+            <div class="grid grid-2 gap-8">
+                <!-- Recent Reservations -->
+                <div class="table-wrapper">
+                    <div class="table-header">
+                        <h3>Réservations Récentes</h3>
+                        <a href="reservations.html" class="btn btn-ghost btn-sm">Voir tout</a>
+                    </div>
+                    <table id="recent-reservations-table">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Dates</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Loaded via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Room Occupancy Level -->
+                <div class="chart-card">
+                    <h3>Disponibilité des Chambres</h3>
+                    <div id="room-occupancy-list" class="space-y-4">
+                        <!-- Loaded via JS -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/notifications.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Override API base for admin
+            API.baseUrl = '../php/api/';
+
+            // Check admin auth
+            const auth = await API.get('auth.php', { action: 'check' });
+            if (!auth.logged_in || auth.user.role !== 'admin') {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            Admin.loadStats();
+            loadRecentReservations();
+
+            document.getElementById('admin-logout').addEventListener('click', async () => {
+                await API.post('auth.php?action=logout');
+                window.location.href = '../index.html';
+            });
+        });
+
+        async function loadRecentReservations() {
+            const res = await API.get('admin/index.php', { resource: 'reservations', action: 'list' });
+            if (res.success) {
+                const tbody = document.querySelector('#recent-reservations-table tbody');
+                tbody.innerHTML = res.data.reservations.slice(0, 5).map(r => `
+                    <tr>
+                        <td>${r.prenom} ${r.nom}</td>
+                        <td><small>${new Date(r.date_debut).toLocaleDateString()}</small></td>
+                        <td><span class="badge ${r.statut === 'Confirmée' ? 'badge-success' : 'badge-warning'}">${r.statut}</span></td>
+                    </tr>
+                `).join('');
+            }
+        }
+    </script>
+</body>
+
+</html>

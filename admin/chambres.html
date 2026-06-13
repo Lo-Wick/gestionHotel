@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Chambres | Célestia Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-brand">CÉLESTIA ADMIN</div>
+            <nav class="admin-sidebar-nav">
+                <a href="index.html"><span class="material-symbols-outlined">analytics</span> Tableau de bord</a>
+                <a href="chambres.html" class="active"><span class="material-symbols-outlined">hotel</span> Chambres</a>
+                <a href="reservations.html"><span class="material-symbols-outlined">calendar_month</span> Réservations</a>
+                <a href="clients.html"><span class="material-symbols-outlined">group</span> Clients</a>
+                <a href="paiements.html"><span class="material-symbols-outlined">payments</span> Paiements</a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-page-header flex-between">
+                <div>
+                    <h1>Hébergements</h1>
+                    <p>Liste et gestion de toutes les chambres de l'hôtel.</p>
+                </div>
+                <button class="btn btn-primary" onclick="openRoomModal()">+ Ajouter une chambre</button>
+            </header>
+
+            <div class="table-wrapper">
+                <div class="table-header">
+                    <div class="flex gap-4">
+                        <input type="text" placeholder="Rechercher par n°..." class="form-input" style="width: 250px;">
+                        <select class="form-select" style="width: 150px;">
+                            <option value="">Tous les types</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Confort">Confort</option>
+                            <option value="Suite">Suite</option>
+                        </select>
+                    </div>
+                </div>
+                <table id="rooms-table">
+                    <thead>
+                        <tr>
+                            <th>Numéro</th>
+                            <th>Type</th>
+                            <th>Prix/Nuit</th>
+                            <th>Capacité</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loaded via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/notifications.js"></script>
+    <script src="../js/modal.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            API.baseUrl = '../php/api/';
+            Admin.loadRoomsTable();
+        });
+
+        function openRoomModal(room = null) {
+            modal.open({
+                title: room ? 'Modifier la chambre' : 'Ajouter une chambre',
+                content: `
+                    <form id="room-form">
+                        <input type="hidden" name="id" value="${room?.id_chambre || ''}">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Numéro</label>
+                                <input type="text" name="numero" class="form-input" value="${room?.numero || ''}" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Type</label>
+                                <select name="type" class="form-select">
+                                    <option value="Standard" ${room?.type === 'Standard' ? 'selected' : ''}>Standard</option>
+                                    <option value="Confort" ${room?.type === 'Confort' ? 'selected' : ''}>Confort</option>
+                                    <option value="Suite" ${room?.type === 'Suite' ? 'selected' : ''}>Suite</option>
+                                    <option value="Présidentielle" ${room?.type === 'Présidentielle' ? 'selected' : ''}>Présidentielle</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Prix / Nuit</label>
+                                <input type="number" name="prix_nuit" class="form-input" value="${room?.prix_nuit || ''}" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Capacité (pers)</label>
+                                <input type="number" name="capacite" class="form-input" value="${room?.capacite || '2'}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" class="form-textarea">${room?.description || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Image URL</label>
+                            <input type="text" name="image_url" class="form-input" value="${room?.image_url || ''}">
+                        </div>
+                    </form>
+                `,
+                footer: `
+                    <button class="btn btn-ghost" onclick="modal.close()">Annuler</button>
+                    <button class="btn btn-primary" onclick="saveRoom()">Enregistrer</button>
+                `
+            });
+        }
+
+        async function saveRoom() {
+            const form = document.getElementById('room-form');
+            const data = Object.fromEntries(new FormData(form));
+            const action = data.id ? 'update' : 'create';
+
+            const res = await API.post(`admin/index.php?resource=chambres&action=${action}`, data);
+            if (res.success) {
+                notify.success(res.message);
+                modal.close();
+                Admin.loadRoomsTable();
+            } else {
+                notify.error(res.error);
+            }
+        }
+
+        // Expose edit function
+        Admin.editRoom = (id) => {
+            API.get('chambres.php', { action: 'detail', id }).then(res => {
+                if (res.success) openRoomModal(res.chambre);
+            });
+        };
+    </script>
+</body>
+
+</html>

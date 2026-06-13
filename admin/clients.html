@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Clients | Célestia Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-brand">CÉLESTIA ADMIN</div>
+            <nav class="admin-sidebar-nav">
+                <a href="index.html"><span class="material-symbols-outlined">analytics</span> Tableau de bord</a>
+                <a href="chambres.html"><span class="material-symbols-outlined">hotel</span> Chambres</a>
+                <a href="reservations.html"><span class="material-symbols-outlined">calendar_month</span> Réservations</a>
+                <a href="clients.html" class="active"><span class="material-symbols-outlined">group</span> Clients</a>
+                <a href="paiements.html"><span class="material-symbols-outlined">payments</span> Paiements</a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-page-header">
+                <h1>Clients</h1>
+                <p>Gestion des comptes utilisateurs enregistrés.</p>
+            </header>
+
+            <div class="table-wrapper">
+                <div class="table-header">
+                    <input type="text" placeholder="Rechercher un client..." class="form-input" style="width: 300px;">
+                </div>
+                <table id="clients-table">
+                    <thead>
+                        <tr>
+                            <th>Nom & Prénom</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Rôle</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loaded via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/notifications.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            API.baseUrl = '../php/api/';
+            const res = await API.get('admin/index.php', { resource: 'clients', action: 'list' });
+            if (res.success) {
+                const tbody = document.querySelector('#clients-table tbody');
+                tbody.innerHTML = res.data.clients.map(c => `
+                    <tr>
+                        <td><b>${c.nom} ${c.prenom}</b></td>
+                        <td>${c.email}</td>
+                        <td>${c.telephone}</td>
+                        <td><span class="badge ${c.role === 'admin' ? 'badge-primary' : 'badge-secondary'}">${c.role}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-ghost">📧</button>
+                            <button class="btn btn-sm btn-ghost text-danger"><span class="material-symbols-outlined">warning</span></button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        });
+    </script>
+</body>
+
+</html>

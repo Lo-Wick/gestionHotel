@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique Paiements | Célestia Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-brand">CÉLESTIA ADMIN</div>
+            <nav class="admin-sidebar-nav">
+                <a href="index.html"><span class="material-symbols-outlined">analytics</span> Tableau de bord</a>
+                <a href="chambres.html"><span class="material-symbols-outlined">hotel</span> Chambres</a>
+                <a href="reservations.html"><span class="material-symbols-outlined">calendar_month</span> Réservations</a>
+                <a href="clients.html"><span class="material-symbols-outlined">group</span> Clients</a>
+                <a href="paiements.html" class="active"><span class="material-symbols-outlined">payments</span> Paiements</a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-page-header">
+                <h1>Transactions</h1>
+                <p>Historique complet des paiements encaissés.</p>
+            </header>
+
+            <div class="table-wrapper">
+                <table id="payments-table">
+                    <thead>
+                        <tr>
+                            <th>ID Paiement</th>
+                            <th>Réservation</th>
+                            <th>Date</th>
+                            <th>Mode</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loaded via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/notifications.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            API.baseUrl = '../php/api/';
+            const res = await API.get('admin/index.php', { resource: 'paiements', action: 'list' });
+            if (res.success) {
+                const tbody = document.querySelector('#payments-table tbody');
+                tbody.innerHTML = res.data.paiements.map(p => `
+                    <tr>
+                        <td><b>#PAY-${p.id_paiement}</b></td>
+                        <td>RES-${p.id_reservation}</td>
+                        <td>${new Date(p.date_paiement).toLocaleDateString()}</td>
+                        <td>${p.mode_paiement}</td>
+                        <td><b>${p.montant} €</b></td>
+                        <td><span class="badge badge-success">Payé</span></td>
+                    </tr>
+                `).join('');
+            }
+        });
+    </script>
+</body>
+
+</html>
