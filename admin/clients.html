@@ -32,7 +32,7 @@
 
             <div class="table-wrapper">
                 <div class="table-header">
-                    <input type="text" placeholder="Rechercher un client..." class="form-input" style="width: 300px;">
+                    <input type="text" placeholder="Rechercher un client..." class="form-input" style="width: 300px;" id="client-search">
                 </div>
                 <table id="clients-table">
                     <thead>
@@ -54,26 +54,18 @@
 
     <script src="../js/api.js"></script>
     <script src="../js/notifications.js"></script>
+    <script src="../js/modal.js"></script>
     <script src="../js/admin.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            API.baseUrl = '../php/api/';
-            const res = await API.get('admin/index.php', { resource: 'clients', action: 'list' });
-            if (res.success) {
-                const tbody = document.querySelector('#clients-table tbody');
-                tbody.innerHTML = res.data.clients.map(c => `
-                    <tr>
-                        <td><b>${c.nom} ${c.prenom}</b></td>
-                        <td>${c.email}</td>
-                        <td>${c.telephone}</td>
-                        <td><span class="badge ${c.role === 'admin' ? 'badge-primary' : 'badge-secondary'}">${c.role}</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-ghost">📧</button>
-                            <button class="btn btn-sm btn-ghost text-danger"><span class="material-symbols-outlined">warning</span></button>
-                        </td>
-                    </tr>
-                `).join('');
-            }
+            if (!await Admin.requireAuth()) return;
+            Admin.loadClientsTable();
+
+            let timer;
+            document.getElementById('client-search')?.addEventListener('input', (e) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => Admin.loadClientsTable(e.target.value.trim()), 350);
+            });
         });
     </script>
 </body>

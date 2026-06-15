@@ -18,10 +18,18 @@ const API = {
                 }
             });
 
-            const data = await response.json();
+            const text = await response.text();
+            let data;
+            try {
+                data = text ? JSON.parse(text) : {};
+            } catch {
+                return {
+                    error: 'Réponse serveur invalide. Vérifiez que le serveur PHP est démarré.',
+                    ok: false
+                };
+            }
 
             if (!response.ok) {
-                // Return an object that indicates error
                 return { 
                     error: data.error || `Erreur ${response.status}`, 
                     status: response.status,

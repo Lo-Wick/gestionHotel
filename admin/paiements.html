@@ -55,21 +55,8 @@
     <script src="../js/admin.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            API.baseUrl = '../php/api/';
-            const res = await API.get('admin/index.php', { resource: 'paiements', action: 'list' });
-            if (res.success) {
-                const tbody = document.querySelector('#payments-table tbody');
-                tbody.innerHTML = res.data.paiements.map(p => `
-                    <tr>
-                        <td><b>#PAY-${p.id_paiement}</b></td>
-                        <td>RES-${p.id_reservation}</td>
-                        <td>${new Date(p.date_paiement).toLocaleDateString()}</td>
-                        <td>${p.mode_paiement}</td>
-                        <td><b>${p.montant} €</b></td>
-                        <td><span class="badge badge-success">Payé</span></td>
-                    </tr>
-                `).join('');
-            }
+            if (!await Admin.requireAuth()) return;
+            Admin.loadPaymentsTable();
         });
     </script>
 </body>

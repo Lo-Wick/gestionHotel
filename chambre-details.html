@@ -5,33 +5,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails Chambre | Célestia Hotel</title>
+    <meta name="description" content="Découvrez les détails, prestations et tarifs de nos chambres d'exception au Célestia Hotel Paris.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
     <link rel="stylesheet" href="css/animations.css">
 </head>
 
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" id="main-navbar">
         <div class="container">
             <a href="index.html" class="navbar-brand">
                 <div class="brand-icon">C</div>
                 <span>CÉLESTIA <b>HOTEL</b></span>
             </a>
-            <div class="navbar-nav">
+            <div class="hamburger" id="hamburger-btn" role="button" aria-label="Menu" tabindex="0">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="navbar-nav" id="main-nav">
                 <a href="index.html">Accueil</a>
                 <a href="chambres.html" class="active">Nos Chambres</a>
                 <a href="reservation.html">Réserver</a>
+                <div class="navbar-actions" id="auth-links"></div>
             </div>
-            <div class="navbar-actions" id="auth-links"></div>
-        </div>
         </div>
     </nav>
 
     <main class="main-content">
-        <div class="container section" id="room-detail">
-            <div class="spinner"></div>
+        <!-- Page Header avec breadcrumb -->
+        <header class="page-header" style="--header-bg: url('assets/img/hero_room_details.png')">
+            <div class="container">
+                <nav class="breadcrumb" aria-label="Fil d'Ariane">
+                    <a href="index.html">Accueil</a>
+                    <span class="separator">/</span>
+                    <a href="chambres.html">Nos Chambres</a>
+                    <span class="separator">/</span>
+                    <span class="current" id="breadcrumb-current">Détails de la Chambre</span>
+                </nav>
+                <h1>Détails &amp; Services Privilèges</h1>
+                <p>Plongez au cœur d'une expérience sensorielle et d'un confort d'exception conçu pour vous.</p>
+            </div>
+        </header>
+
+        <!-- Contenu principal chargé par JS -->
+        <div class="container section" id="room-detail" aria-live="polite" aria-busy="true">
+            <div class="loading-state" role="status">
+                <div class="spinner"></div>
+                <p>Chargement des détails de la chambre…</p>
+                <span class="text-xs text-secondary">Veuillez patienter quelques instants.</span>
+            </div>
         </div>
     </main>
 
@@ -53,10 +78,18 @@
                 <div>
                     <h4>Contact</h4>
                     <ul>
-                        <li><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</li>
-                        <li><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</li>
-                        <li><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</li>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
                     </ul>
+                </div>
+                <div>
+                    <h4>Suivez-nous</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -74,7 +107,16 @@
     <script src="js/main.js"></script>
     <script src="js/reservations.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => Booking.initDetail());
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof Booking !== 'undefined') {
+                Booking.initDetail();
+            } else {
+                const el = document.getElementById('room-detail');
+                if (el) {
+                    el.innerHTML = '<div class="error-state" role="alert"><span class="material-symbols-outlined error-icon">error_outline</span><h3>Erreur de chargement</h3><p>Le script de réservation n\'a pas pu être chargé. Rechargez la page.</p><div class="error-actions"><a href="chambres.html" class="btn btn-primary">Retour aux chambres</a></div></div>';
+                }
+            }
+        });
     </script>
 </body>
 

@@ -40,6 +40,8 @@ function handleCreate(): void {
     $idChambre      = (int)($input['id_chambre'] ?? 0);
     $dateDebut      = sanitize($input['date_debut'] ?? '');
     $dateFin        = sanitize($input['date_fin'] ?? '');
+    $heureArrivee   = sanitize($input['heure_arrivee'] ?? '15:00:00');
+    $heureDepart    = sanitize($input['heure_depart'] ?? '11:00:00');
     $nombreAdultes  = (int)($input['nombre_adultes'] ?? 1);
     $nombreEnfants  = (int)($input['nombre_enfants'] ?? 0);
     $remarques      = sanitize($input['remarques'] ?? '');
@@ -52,6 +54,14 @@ function handleCreate(): void {
     if ($dateDebut >= $dateFin) $errors[] = 'La date de fin doit être après la date de début';
     if (strtotime($dateDebut) < strtotime('today')) $errors[] = 'La date de début ne peut pas être dans le passé';
     if ($nombreAdultes < 1) $errors[] = 'Au moins 1 adulte requis';
+
+    // Heures valides (simple regex Check)
+    if (!preg_match('/^(?:2[0-3]|[01][0-9]):[0-5][0-9](?::[0-5][0-9])?$/', $heureArrivee)) {
+        $heureArrivee = '15:00:00';
+    }
+    if (!preg_match('/^(?:2[0-3]|[01][0-9]):[0-5][0-9](?::[0-5][0-9])?$/', $heureDepart)) {
+        $heureDepart = '11:00:00';
+    }
 
     if (!empty($errors)) {
         jsonResponse(['error' => implode('. ', $errors), 'errors' => $errors], 400);
@@ -69,8 +79,8 @@ function handleCreate(): void {
         jsonResponse(['error' => 'Le nombre de personnes dépasse la capacité de la chambre (' . $chambre['capacite'] . ' personnes max)'], 400);
     }
 
-    if (!$chambreModel->isDisponible($idChambre, $dateDebut, $dateFin)) {
-        jsonResponse(['error' => 'Cette chambre n\'est pas disponible pour les dates sélectionnées'], 409);
+    if (!$chambreModel->isDisponible($idChambre, $dateDebut, $dateFin, $heureArrivee, $heureDepart)) {
+        jsonResponse(['error' => 'Cette chambre n\'est pas disponible pour les dates et horaires sélectionnés'], 409);
     }
 
     // Calcul du montant
@@ -84,6 +94,8 @@ function handleCreate(): void {
         'id_chambre'     => $idChambre,
         'date_debut'     => $dateDebut,
         'date_fin'       => $dateFin,
+        'heure_arrivee'  => $heureArrivee,
+        'heure_depart'   => $heureDepart,
         'nombre_adultes' => $nombreAdultes,
         'nombre_enfants' => $nombreEnfants,
         'montant_total'  => $montantTotal,
@@ -99,6 +111,8 @@ function handleCreate(): void {
             'type'          => $chambre['type'],
             'date_debut'    => $dateDebut,
             'date_fin'      => $dateFin,
+            'heure_arrivee' => $heureArrivee,
+            'heure_depart'  => $heureDepart,
             'nuits'         => $nuits,
             'montant_total' => $montantTotal
         ]
@@ -184,8 +198,22 @@ function handlePayer(): void {
         jsonResponse(['error' => 'Accès non autorisé'], 403);
     }
 
-    // Simuler le paiement
+    if ($reservation['statut'] === 'Confirmée') {
+        jsonResponse(['error' => 'Cette réservation est déjà confirmée et payée'], 409);
+    }
+    if ($reservation['statut'] === 'Annulée') {
+        jsonResponse(['error' => 'Impossible de payer une réservation annulée'], 400);
+    }
+
     $db = Database::getInstance();
+
+    $checkPay = $db->prepare("SELECT COUNT(*) FROM paiement WHERE id_reservation = :id");
+    $checkPay->execute([':id' => $idReservation]);
+    if ((int)$checkPay->fetchColumn() > 0) {
+        jsonResponse(['error' => 'Un paiement existe déjà pour cette réservation'], 409);
+    }
+
+    // Simuler le paiement
     $stmt = $db->prepare(
         "INSERT INTO paiement (id_reservation, montant, mode_paiement, statut) VALUES (:id, :montant, :mode, 'Payé')"
     );

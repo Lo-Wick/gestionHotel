@@ -88,19 +88,37 @@ class Client {
     }
 
     // Lister tous les clients (admin)
-    public function getAll(int $page = 1, int $limit = 10): array {
+    public function getAll(int $page = 1, int $limit = 10, ?string $search = null): array {
         $offset = ($page - 1) * $limit;
-        
-        $stmt = $this->db->prepare(
-            "SELECT id_client, nom, prenom, email, telephone, role, date_inscription 
-             FROM client ORDER BY date_inscription DESC LIMIT :limit OFFSET :offset"
-        );
+        $sql = "SELECT id_client, nom, prenom, email, telephone, role, date_inscription FROM client WHERE 1=1";
+        $params = [];
+
+        if ($search) {
+            $sql .= " AND (nom LIKE :search OR prenom LIKE :search OR email LIKE :search)";
+            $params[':search'] = '%' . $search . '%';
+        }
+
+        $sql .= " ORDER BY date_inscription DESC LIMIT :limit OFFSET :offset";
+
+        $stmt = $this->db->prepare($sql);
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         $clients = $stmt->fetchAll();
 
-        $total = (int)$this->db->query("SELECT COUNT(*) FROM client")->fetchColumn();
+        $countSql = "SELECT COUNT(*) FROM client WHERE 1=1";
+        if ($search) {
+            $countSql .= " AND (nom LIKE :search OR prenom LIKE :search OR email LIKE :search)";
+        }
+        $countStmt = $this->db->prepare($countSql);
+        if ($search) {
+            $countStmt->bindValue(':search', '%' . $search . '%');
+        }
+        $countStmt->execute();
+        $total = (int)$countStmt->fetchColumn();
 
         return [
             'clients'     => $clients,

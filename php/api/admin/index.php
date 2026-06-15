@@ -60,6 +60,7 @@ function handleChambres(string $action): void {
         case 'list':
             $filters = [
                 'type'     => $_GET['type'] ?? null,
+                'numero'   => $_GET['numero'] ?? null,
                 'page'     => $_GET['page'] ?? 1,
                 'limit'    => $_GET['limit'] ?? 20,
                 'tri'      => $_GET['tri'] ?? 'numero'
@@ -173,7 +174,8 @@ function handleClients(string $action): void {
     switch ($action) {
         case 'list':
             $page = max(1, (int)($_GET['page'] ?? 1));
-            $result = $clientModel->getAll($page);
+            $search = $_GET['search'] ?? null;
+            $result = $clientModel->getAll($page, 10, $search);
             jsonResponse(['success' => true, 'data' => $result]);
             break;
 

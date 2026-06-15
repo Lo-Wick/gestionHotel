@@ -1,0 +1,6 @@
+Auth Debug Started
+Checking for user: admin@hotel.com
+User found in database.
+Stored Hash: $2y$10$YQEzGODG5NQJbq3NiZC0duPFbKVXfnGOSz5hKN5bCLzFzklmDKR9O
+PASSWORD VERIFIED FAILURE
+Suggested new hash: $2y$10$Qvbcrr9yly8H7pABYK6KFO3pLyx/LpK0UGpoTCPouByzUsB8qLLAu

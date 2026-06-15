@@ -21,6 +21,10 @@ class Chambre {
             $sql .= " AND type = :type";
             $params[':type'] = $filters['type'];
         }
+        if (!empty($filters['numero'])) {
+            $sql .= " AND numero LIKE :numero";
+            $params[':numero'] = '%' . $filters['numero'] . '%';
+        }
         if (!empty($filters['prix_min'])) {
             $sql .= " AND prix_nuit >= :prix_min";
             $params[':prix_min'] = $filters['prix_min'];
@@ -43,11 +47,11 @@ class Chambre {
             $sql .= " AND id_chambre NOT IN (
                 SELECT id_chambre FROM reservation 
                 WHERE statut NOT IN ('Annulée', 'Terminée')
-                AND date_debut < :date_fin_check 
-                AND date_fin > :date_debut_check
+                AND CONCAT(date_debut, ' ', heure_arrivee) < :end_datetime_check 
+                AND CONCAT(date_fin, ' ', heure_depart) > :start_datetime_check
             )";
-            $params[':date_debut_check'] = $filters['date_debut'];
-            $params[':date_fin_check'] = $filters['date_fin'];
+            $params[':start_datetime_check'] = $filters['date_debut'] . ' 15:00:00';
+            $params[':end_datetime_check'] = $filters['date_fin'] . ' 11:00:00';
         }
 
         // Tri
@@ -104,11 +108,11 @@ class Chambre {
             $countSql .= " AND id_chambre NOT IN (
                 SELECT id_chambre FROM reservation 
                 WHERE statut NOT IN ('Annulée', 'Terminée')
-                AND date_debut < :date_fin_check 
-                AND date_fin > :date_debut_check
+                AND CONCAT(date_debut, ' ', heure_arrivee) < :end_datetime_check 
+                AND CONCAT(date_fin, ' ', heure_depart) > :start_datetime_check
             )";
-            $countParams[':date_debut_check'] = $filters['date_debut'];
-            $countParams[':date_fin_check'] = $filters['date_fin'];
+            $countParams[':start_datetime_check'] = $filters['date_debut'] . ' 15:00:00';
+            $countParams[':end_datetime_check'] = $filters['date_fin'] . ' 11:00:00';
         }
         $countStmt = $this->db->prepare($countSql);
         $countStmt->execute($countParams);
@@ -175,17 +179,17 @@ class Chambre {
         return $stmt->execute([':id' => $id]);
     }
 
-    // Vérifier disponibilité d'une chambre sur une période
-    public function isDisponible(int $idChambre, string $dateDebut, string $dateFin, ?int $excludeReservation = null): bool {
+    // Vérifier disponibilité d'une chambre sur une période (avec heures pour éviter les conflits)
+    public function isDisponible(int $idChambre, string $dateDebut, string $dateFin, string $heureArrivee = '15:00:00', string $heureDepart = '11:00:00', ?int $excludeReservation = null): bool {
         $sql = "SELECT COUNT(*) FROM reservation 
                 WHERE id_chambre = :id_chambre 
                 AND statut NOT IN ('Annulée', 'Terminée')
-                AND date_debut < :date_fin 
-                AND date_fin > :date_debut";
+                AND CONCAT(date_debut, ' ', heure_arrivee) < :end_datetime
+                AND CONCAT(date_fin, ' ', heure_depart) > :start_datetime";
         $params = [
-            ':id_chambre' => $idChambre,
-            ':date_debut' => $dateDebut,
-            ':date_fin'   => $dateFin
+            ':id_chambre'     => $idChambre,
+            ':start_datetime' => "$dateDebut $heureArrivee",
+            ':end_datetime'   => "$dateFin $heureDepart"
         ];
         if ($excludeReservation) {
             $sql .= " AND id_reservation != :exclude";

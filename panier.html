@@ -4,43 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paiement & Confirmation | Célestia Hotel</title>
+    <title>Paiement &amp; Confirmation | Célestia Hotel</title>
+    <meta name="description" content="Finalisez votre paiement en toute sécurité pour votre réservation au Célestia Hotel.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/print.css" media="print">
 </head>
 
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" id="main-navbar">
         <div class="container">
             <a href="index.html" class="navbar-brand">
                 <div class="brand-icon">C</div>
                 <span>CÉLESTIA <b>HOTEL</b></span>
             </a>
+            <div class="navbar-nav">
+                <a href="index.html">Accueil</a>
+                <a href="chambres.html">Nos Chambres</a>
+                <div class="navbar-actions" id="auth-links"></div>
+            </div>
         </div>
     </nav>
 
     <main class="main-content">
         <div class="container section">
-            <div class="stepper">
-                <div class="stepper-step completed">
-                    <div class="stepper-number">1</div>
+
+            <!-- Stepper de progression -->
+            <div class="stepper" role="navigation" aria-label="Étapes de réservation">
+                <div class="stepper-step completed" aria-label="Étape 1 terminée">
+                    <div class="stepper-number">
+                        <span class="material-symbols-outlined" style="font-size:1.1rem">check</span>
+                    </div>
                     <div class="stepper-label">Choix chambre</div>
                 </div>
-                <div class="stepper-step completed">
-                    <div class="stepper-number">2</div>
+                <div class="stepper-step completed" aria-label="Étape 2 terminée">
+                    <div class="stepper-number">
+                        <span class="material-symbols-outlined" style="font-size:1.1rem">check</span>
+                    </div>
                     <div class="stepper-label">Détails séjour</div>
                 </div>
-                <div class="stepper-step active">
+                <div class="stepper-step active" aria-current="step">
                     <div class="stepper-number">3</div>
                     <div class="stepper-label">Paiement</div>
                 </div>
             </div>
 
-            <div class="grid grid-2 gap-12" id="payment-view">
-                <div class="spinner"></div>
+            <!-- Contenu dynamique (méthodes de paiement + récapitulatif) -->
+            <div id="payment-view" class="grid" style="align-items:start;">
+                <div class="loading-state" role="status" style="grid-column:1/-1;">
+                    <div class="spinner"></div>
+                    <p>Chargement de votre réservation…</p>
+                </div>
             </div>
+
         </div>
     </main>
 
@@ -62,15 +82,17 @@
                 <div>
                     <h4>Contact</h4>
                     <ul>
-                        <li><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</li>
-                        <li><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</li>
-                        <li><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</li>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4>Suivez-nous</h4>
-                    <div class="flex gap-4">
-                        <a href="#">FB</a> <a href="#">IG</a> <a href="#">TW</a>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
                     </div>
                 </div>
             </div>
@@ -86,104 +108,228 @@
 
     <script src="js/api.js"></script>
     <script src="js/notifications.js"></script>
+    <script src="js/modal.js"></script>
     <script src="js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
+            const container = document.getElementById('payment-view');
 
-            if (!id) { window.location.href = 'chambres.html'; return; }
+            if (!id) {
+                notify.warning('Aucune réservation sélectionnée.');
+                window.location.href = 'chambres.html';
+                return;
+            }
+
+            const auth = await API.get('auth.php', { action: 'check' });
+            if (!auth.logged_in) {
+                notify.warning('Connectez-vous pour accéder au paiement.');
+                setTimeout(() => {
+                    window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.href);
+                }, 1500);
+                return;
+            }
 
             const res = await API.get('reservations.php', { action: 'detail', id });
             if (res.success) {
                 renderPaymentPage(res.reservation);
             } else {
-                notify.error(res.error);
+                container.innerHTML = `
+                    <div class="loading-state" style="grid-column:1/-1; text-align:center;">
+                        <span class="material-symbols-outlined error-icon">error_outline</span>
+                        <h3>Réservation introuvable</h3>
+                        <p>${res.error || 'Cette réservation n\'existe pas ou ne vous appartient pas.'}</p>
+                        <a href="profil.html" class="btn btn-primary" style="margin-top:1.5rem;">Mes réservations</a>
+                    </div>`;
+                notify.error(res.error || 'Impossible de charger la réservation');
             }
         });
 
         function renderPaymentPage(r) {
             const container = document.getElementById('payment-view');
 
+            /* --- ÉTAT CONFIRMÉ (paiement déjà effectué) --- */
             if (r.statut === 'Confirmée') {
-                container.classList.remove('grid-2');
+                container.style.display = 'block';
                 container.innerHTML = `
-                    <div class="text-center slide-up" style="max-width: 600px; margin: 0 auto;">
-                        <div style="font-size: 5rem; margin-bottom: 2rem;"><span class="material-symbols-outlined">check</span></div>
-                        <h1 class="mb-4">Réservation Confirmée !</h1>
-                        <p class="mb-8">Merci pour votre confiance. Un email récapitulatif a été envoyé à <b>${r.email}</b>.</p>
-                        
-                        <div class="card p-8 text-left mb-8">
-                            <h3 class="mb-4">Récapitulatif n°RES-${r.id_reservation}</h3>
-                            <div class="summary-row"><span class="label">Chambre:</span> <span class="value">${r.type} n°${r.numero}</span></div>
-                            <div class="summary-row"><span class="label">Période:</span> <span class="value">Du ${new Date(r.date_debut).toLocaleDateString()} au ${new Date(r.date_fin).toLocaleDateString()}</span></div>
-                            <div class="summary-row"><span class="label">Montant payé:</span> <span class="value">${r.montant_total} €</span></div>
+                    <div class="payment-success-wrap slide-up">
+                        <div class="payment-success-icon">
+                            <span class="material-symbols-outlined">check</span>
+                        </div>
+                        <h1>Réservation Confirmée&nbsp;!</h1>
+                        <p>Merci pour votre confiance. Un email récapitulatif a été envoyé à <strong>${r.email}</strong>.</p>
+
+                        <div class="success-receipt">
+                            <div class="success-receipt-header">
+                                <div style="display:flex;align-items:center;gap:.75rem;">
+                                    <span class="material-symbols-outlined">receipt_long</span>
+                                    <div>
+                                        <h3>Récapitulatif · Réservation n°RES-${r.id_reservation}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="success-receipt-body">
+                                <div class="res-row">
+                                    <span class="res-label">Chambre</span>
+                                    <span class="res-value">${r.type} n°${r.numero}</span>
+                                </div>
+                                <div class="res-row">
+                                    <span class="res-label">Arrivée</span>
+                                    <span class="res-value">${new Date(r.date_debut).toLocaleDateString('fr-FR', {weekday:'long',day:'numeric',month:'long',year:'numeric'})} à ${r.heure_arrivee ? r.heure_arrivee.substring(0,5) : '15:00'}</span>
+                                </div>
+                                <div class="res-row">
+                                    <span class="res-label">Départ</span>
+                                    <span class="res-value">${new Date(r.date_fin).toLocaleDateString('fr-FR', {weekday:'long',day:'numeric',month:'long',year:'numeric'})} à ${r.heure_depart ? r.heure_depart.substring(0,5) : '11:00'}</span>
+                                </div>
+                                <div class="res-total-row">
+                                    <span class="res-total-label">Montant payé</span>
+                                    <span class="res-total-price total-price">${r.montant_total} €</span>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="flex gap-4 flex-center">
-                            <button class="btn btn-outline" onclick="window.print()">Imprimer la facture</button>
-                            <a href="profil.html" class="btn btn-primary">Mes réservations</a>
+                        <div class="flex gap-4 flex-center" style="flex-wrap:wrap;">
+                            <button class="btn btn-outline btn-lg" onclick="window.print()">
+                                <span class="material-symbols-outlined">print</span> Imprimer la facture
+                            </button>
+                            <a href="profil.html" class="btn btn-primary btn-lg">
+                                <span class="material-symbols-outlined">calendar_today</span> Mes réservations
+                            </a>
                         </div>
-                    </div>
-                `;
+                    </div>`;
                 return;
             }
 
+            /* --- ÉTAT EN ATTENTE DE PAIEMENT --- */
+            container.style.gridTemplateColumns = '1.2fr 1fr';
             container.innerHTML = `
+                <!-- Colonne gauche : méthodes de paiement -->
                 <div class="slide-up">
-                    <h2 class="mb-6">Mode de paiement</h2>
-                    <div class="grid gap-4">
-                        <div class="card p-6 cursor-pointer hover-scale border-2" onclick="processPayment(${r.id_reservation}, 'Carte')">
-                            <div class="flex-between">
-                                <b><span class="material-symbols-outlined">credit_card</span> Carte Bancaire</b>
-                                <span>Visa, Mastercard</span>
+                    <h2 style="margin-bottom:.5rem;">Choisissez votre mode de paiement</h2>
+                    <p style="color:var(--color-gray-400);font-size:.875rem;margin-bottom:1.5rem;">Sélectionnez la méthode qui vous convient. Toutes les transactions sont sécurisées.</p>
+
+                    <div style="display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.5rem;">
+
+                        <button class="payment-method-card" id="pm-card" onclick="selectAndPay(${r.id_reservation}, 'Carte', this)">
+                            <div class="payment-method-info">
+                                <div class="payment-method-icon">
+                                    <span class="material-symbols-outlined">credit_card</span>
+                                </div>
+                                <div>
+                                    <div class="payment-method-name">Carte Bancaire</div>
+                                    <div class="payment-method-sub">Visa, Mastercard, American Express</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card p-6 cursor-pointer hover-scale" onclick="processPayment(${r.id_reservation}, 'Mobile Money')">
-                            <div class="flex-between">
-                                <b><span class="material-symbols-outlined">smartphone</span> Mobile Money</b>
-                                <span>Orange Money, Wave</span>
+                            <span class="material-symbols-outlined payment-method-arrow">arrow_forward_ios</span>
+                        </button>
+
+                        <button class="payment-method-card" id="pm-mobile" onclick="selectAndPay(${r.id_reservation}, 'Mobile Money', this)">
+                            <div class="payment-method-info">
+                                <div class="payment-method-icon">
+                                    <span class="material-symbols-outlined">smartphone</span>
+                                </div>
+                                <div>
+                                    <div class="payment-method-name">Mobile Money</div>
+                                    <div class="payment-method-sub">Orange Money, Wave, MTN MoMo</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card p-6 cursor-pointer hover-scale" onclick="processPayment(${r.id_reservation}, 'Virement')">
-                            <div class="flex-between">
-                                <b><span class="material-symbols-outlined">account_balance</span> Virement</b>
-                                <span>RIB disponible après choix</span>
+                            <span class="material-symbols-outlined payment-method-arrow">arrow_forward_ios</span>
+                        </button>
+
+                        <button class="payment-method-card" id="pm-virement" onclick="selectAndPay(${r.id_reservation}, 'Virement', this)">
+                            <div class="payment-method-info">
+                                <div class="payment-method-icon">
+                                    <span class="material-symbols-outlined">account_balance</span>
+                                </div>
+                                <div>
+                                    <div class="payment-method-name">Virement Bancaire</div>
+                                    <div class="payment-method-sub">RIB fourni après confirmation</div>
+                                </div>
                             </div>
+                            <span class="material-symbols-outlined payment-method-arrow">arrow_forward_ios</span>
+                        </button>
+                    </div>
+
+                    <div class="security-badge">
+                        <span class="material-symbols-outlined">shield</span>
+                        <div class="security-badge-text">
+                            <strong>Paiement 100% sécurisé</strong>
+                            Toutes les transactions sont protégées par un cryptage SSL 256 bits.
                         </div>
                     </div>
-                    <p class="text-xs text-secondary mt-6">Paiement sécurisé par cryptage SSL 256 bits.</p>
                 </div>
 
-                <div class="slide-up">
-                    <h2 class="mb-6">Détails de la réservation</h2>
-                    <div class="summary-card">
-                        <div class="summary-card-header"><h3>RES-${r.id_reservation}</h3></div>
-                        <div class="summary-card-body">
-                            <img src="${r.image_url || 'https://via.placeholder.com/400x200'}" style="width:100%; height:150px; object-fit:cover; border-radius:8px; margin-bottom:1rem;">
-                            <div class="summary-row"><span class="label">Type:</span> <span class="value">${r.type}</span></div>
-                            <div class="summary-row"><span class="label">Chambre:</span> <span class="value">n°${r.numero}</span></div>
-                            <div class="summary-row"><span class="label">Arrivée:</span> <span class="value">${new Date(r.date_debut).toLocaleDateString()}</span></div>
-                            <div class="summary-row"><span class="label">Départ:</span> <span class="value">${new Date(r.date_fin).toLocaleDateString()}</span></div>
-                            <div class="summary-total">
-                                <span>TOTAL</span>
-                                <span class="total-price">${r.montant_total} €</span>
+                <!-- Colonne droite : récapitulatif -->
+                <div class="slide-up" style="animation-delay:0.1s">
+                    <div class="reservation-summary-card">
+                        <div class="reservation-summary-header">
+                            <span class="material-symbols-outlined">hotel</span>
+                            <div>
+                                <h3>Résumé de votre séjour</h3>
+                                <div class="reservation-summary-id">RES-${r.id_reservation}</div>
+                            </div>
+                        </div>
+                        ${r.image_url
+                            ? `<img src="${r.image_url}" class="reservation-summary-image" alt="Chambre ${r.type}">`
+                            : '<div style="height:120px;background:linear-gradient(135deg,var(--color-gray-100),var(--color-beige));display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined" style="font-size:3rem;color:var(--color-gray-300);">hotel</span></div>'
+                        }
+                        <div class="reservation-summary-body">
+                            <div class="res-row">
+                                <span class="res-label">Type</span>
+                                <span class="res-value">${r.type}</span>
+                            </div>
+                            <div class="res-row">
+                                <span class="res-label">Chambre</span>
+                                <span class="res-value">N°${r.numero}</span>
+                            </div>
+                            <div class="res-row">
+                                <span class="res-label">Arrivée</span>
+                                <span class="res-value">${new Date(r.date_debut).toLocaleDateString('fr-FR')} · ${r.heure_arrivee ? r.heure_arrivee.substring(0,5) : '15:00'}</span>
+                            </div>
+                            <div class="res-row">
+                                <span class="res-label">Départ</span>
+                                <span class="res-value">${new Date(r.date_fin).toLocaleDateString('fr-FR')} · ${r.heure_depart ? r.heure_depart.substring(0,5) : '11:00'}</span>
+                            </div>
+                            <div class="res-total-row">
+                                <span class="res-total-label">Total</span>
+                                <span class="res-total-price total-price">${r.montant_total} €</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            `;
+
+                    <p style="font-size:.7rem;color:var(--color-gray-400);text-align:center;margin-top:1rem;line-height:1.6;">
+                        Taxes et TVA incluses &middot; Meilleur prix garanti &middot; Confirmation immédiate
+                    </p>
+                </div>`;
         }
 
-        async function processPayment(id, mode) {
-            notify.info('Traitement du paiement...');
-            const res = await API.post('reservations.php?action=payer', { id_reservation: id, mode_paiement: mode });
-            if (res.success) {
-                notify.success(res.message);
-                setTimeout(() => window.location.reload(), 1500);
-            } else {
-                notify.error(res.error);
-            }
+        function selectAndPay(id, mode, btn) {
+            // Highlight selected card
+            document.querySelectorAll('.payment-method-card').forEach(c => c.classList.remove('selected'));
+            btn.classList.add('selected');
+
+            const total = document.querySelector('.total-price')?.textContent || '';
+            modal.confirm(
+                'Confirmer le paiement',
+                `Valider le paiement par <strong>${mode}</strong> pour un montant de <strong>${total}</strong> ?`,
+                async () => {
+                    notify.info('Traitement du paiement en cours…');
+                    const res = await API.post('reservations.php?action=payer', { id_reservation: id, mode_paiement: mode });
+                    if (res.success) {
+                        notify.success(res.message);
+                        setTimeout(() => window.location.reload(), 1500);
+                    } else {
+                        notify.error(res.error);
+                        btn.classList.remove('selected');
+                    }
+                }
+            );
+        }
+
+        // Alias pour compatibilité si appelé depuis l'ancienne signature
+        function processPayment(id, mode) {
+            selectAndPay(id, mode, document.getElementById('pm-card') || document.createElement('div'));
         }
     </script>
 </body>

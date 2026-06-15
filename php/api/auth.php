@@ -223,33 +223,27 @@ function handleChangePassword(): void {
 }
 
 function handleForgotPassword(): void {
-    $email = trim(getInput()['email'] ?? $_POST['email'] ?? '');
+    $input = json_decode(file_get_contents('php://input'), true);
+    $email = sanitize($input['email'] ?? '');
+
     if (empty($email)) {
-        jsonResponse(['error' => 'Email requis'], 400);
+        jsonResponse(['error' => 'Veuillez saisir votre adresse email'], 400);
+    }
+    if (!isValidEmail($email)) {
+        jsonResponse(['error' => 'Format d\'email invalide'], 400);
     }
 
-    $pdo = Database::getInstance();
-    $stmt = $pdo->prepare("SELECT id_client FROM client WHERE email = :email");
-    $stmt->execute([':email' => $email]);
-    $user = $stmt->fetch();
-    
-    if (!$user) {
-        // Mock successful behavior for security (prevent email enumeration)
-        jsonResponse(['success' => true, 'message' => 'Si cet email existe, les instructions ont été envoyées.']);
+    $client = new Client();
+    $user = $client->findByEmail($email);
+
+    // Réponse identique que l'email existe ou non (protection contre l'énumération)
+    $successMessage = 'Si cet email est enregistré, un nouveau mot de passe vous a été envoyé par email.';
+
+    if ($user) {
+        $newPassword = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$'), 0, 12);
+        $client->updateProfile((int)$user['id_client'], ['password' => $newPassword]);
+        // En production : envoi par email. Simulation locale uniquement.
     }
-    
-    // Generate new secure temporary password
-    $newPassword = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$'), 0, 10);
-    $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
-    
-    // Update the DB
-    $stmt = $pdo->prepare("UPDATE client SET mot_de_passe = :pwd WHERE id_client = :id");
-    $stmt->execute([':pwd' => $hashed, ':id' => $user['id_client']]);
-    
-    // In a real application, you would send an email here.
-    // For this simulation, we simulate the success and secretly log the password or return it in the message for demo purposes ONLY.
-    jsonResponse([
-        'success' => true, 
-        'message' => 'Un email a été envoyé (Simulation - Nouveau mot de passe : ' . $newPassword . ')'
-    ]);
+
+    jsonResponse(['success' => true, 'message' => $successMessage]);
 }

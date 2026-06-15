@@ -6,11 +6,10 @@ const App = {
     user: null,
 
     async init() {
-        console.log('Hotel App Initializing...');
-        await this.checkAuth();
-        this.setupEventListeners();
         this.initDarkMode();
+        this.setupEventListeners();
         this.handleResponsiveMenu();
+        await this.checkAuth();
     },
 
     async checkAuth() {
@@ -90,14 +89,51 @@ const App = {
 
         document.documentElement.setAttribute('data-theme', currentTheme);
 
+        // Référence dynamique : toujours chercher le bouton au moment d'appliquer
+        const applyTheme = (theme) => {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            const btn = document.getElementById('dark-mode-toggle-btn');
+            if (btn) {
+                btn.textContent = theme === 'dark' ? '☀️ Mode Clair' : '🌙 Mode Sombre';
+                btn.setAttribute('aria-label', theme === 'dark' ? 'Activer le mode clair' : 'Activer le mode sombre');
+            }
+        };
+
         if (toggle) {
             toggle.checked = currentTheme === 'dark';
             toggle.addEventListener('change', (e) => {
-                const theme = e.target.checked ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
+                applyTheme(e.target.checked ? 'dark' : 'light');
             });
         }
+
+        // Créer le bouton dynamiquement s'il n'existe pas dans le HTML
+        if (!document.getElementById('dark-mode-toggle-btn') && !toggle && document.querySelector('.navbar')) {
+            const btn = document.createElement('button');
+            btn.id = 'dark-mode-toggle-btn';
+            btn.className = 'btn btn-ghost btn-sm';
+            btn.type = 'button';
+            btn.setAttribute('aria-label', currentTheme === 'dark' ? 'Activer le mode clair' : 'Activer le mode sombre');
+            btn.textContent = currentTheme === 'dark' ? '☀️ Mode Clair' : '🌙 Mode Sombre';
+            btn.addEventListener('click', () => {
+                const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                applyTheme(next);
+            });
+            // Insérer dans la navbar (avant auth-links ou à la fin de .container navbar)
+            const navbarContainer = document.querySelector('.navbar .container');
+            if (navbarContainer) navbarContainer.appendChild(btn);
+        } else if (document.getElementById('dark-mode-toggle-btn')) {
+            const existingBtn = document.getElementById('dark-mode-toggle-btn');
+            existingBtn.textContent = currentTheme === 'dark' ? '☀️ Mode Clair' : '🌙 Mode Sombre';
+            existingBtn.addEventListener('click', () => {
+                const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                applyTheme(next);
+                if (toggle) toggle.checked = next === 'dark';
+            });
+        }
+
+        // Stocker applyTheme pour usage global
+        this._applyTheme = applyTheme;
     },
 
     handleResponsiveMenu() {

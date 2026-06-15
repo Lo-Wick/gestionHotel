@@ -15,14 +15,16 @@ class Reservation {
     // Créer une réservation
     public function create(array $data): int {
         $stmt = $this->db->prepare(
-            "INSERT INTO reservation (id_client, id_chambre, date_debut, date_fin, nombre_adultes, nombre_enfants, montant_total, remarques) 
-             VALUES (:id_client, :id_chambre, :date_debut, :date_fin, :nombre_adultes, :nombre_enfants, :montant_total, :remarques)"
+            "INSERT INTO reservation (id_client, id_chambre, date_debut, date_fin, heure_arrivee, heure_depart, nombre_adultes, nombre_enfants, montant_total, remarques) 
+             VALUES (:id_client, :id_chambre, :date_debut, :date_fin, :heure_arrivee, :heure_depart, :nombre_adultes, :nombre_enfants, :montant_total, :remarques)"
         );
         $stmt->execute([
             ':id_client'       => $data['id_client'],
             ':id_chambre'      => $data['id_chambre'],
             ':date_debut'      => $data['date_debut'],
             ':date_fin'        => $data['date_fin'],
+            ':heure_arrivee'   => $data['heure_arrivee'] ?? '15:00:00',
+            ':heure_depart'    => $data['heure_depart'] ?? '11:00:00',
             ':nombre_adultes'  => $data['nombre_adultes'] ?? 1,
             ':nombre_enfants'  => $data['nombre_enfants'] ?? 0,
             ':montant_total'   => $data['montant_total'],

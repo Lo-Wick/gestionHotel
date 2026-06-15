@@ -24,8 +24,19 @@ const Filters = {
             this.renderRooms(container, response.data.chambres);
             this.renderPagination(response.data);
         } else {
-            notify.error(response.error);
+            container.innerHTML = '<div class="empty-state"><h3>Chargement impossible</h3><p>' + (response.error || 'Erreur inconnue') + '</p></div>';
+            notify.error(response.error || 'Erreur lors du chargement des chambres');
         }
+    },
+
+    getHighlights(type) {
+        const h = {
+            Standard: 'Lit double · Wi-Fi · Douche moderne',
+            Confort: 'Literie Premium · Minibar · Nespresso',
+            Suite: 'King Size · Jacuzzi · Room service 24h/24',
+            Présidentielle: 'Majordome 24h/24 · Spa VIP · Limousine'
+        };
+        return h[type] || '';
     },
 
     renderRooms(container, rooms) {
@@ -51,7 +62,10 @@ const Filters = {
                     <p class="card-text">${room.description}</p>
                     <div class="card-meta">
                         <span><span class="material-symbols-outlined">group</span> ${room.capacite} pers.</span>
-                        <span>📏 25m²</span>
+                        <span><span class="material-symbols-outlined">hotel</span> ${room.type}</span>
+                    </div>
+                    <div class="card-highlights" style="margin-top: var(--space-3); font-size: var(--text-sm); color: var(--color-secondary-dark); font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                        <span>✨</span> <span>${this.getHighlights(room.type)}</span>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -83,14 +97,18 @@ const Filters = {
         const form = document.getElementById('filter-form');
         if (!form) return;
 
-        form.addEventListener('input', (e) => {
-            const formData = new FormData(form);
-            formData.forEach((value, key) => {
-                if (value) this.params[key] = value;
-                else delete this.params[key];
-            });
-            this.params.page = 1;
-            this.loadChambres('rooms-container');
+        let debounceTimer;
+        form.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                const formData = new FormData(form);
+                formData.forEach((value, key) => {
+                    if (value) this.params[key] = value;
+                    else delete this.params[key];
+                });
+                this.params.page = 1;
+                this.loadChambres('rooms-container');
+            }, 400);
         });
     }
 };

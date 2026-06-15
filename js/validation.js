@@ -10,8 +10,15 @@ const validation = {
         password: (val) => {
             if (val.length < 8) return 'Minimum 8 caractères';
             if (!/[A-Z]/.test(val)) return 'Doit contenir une majuscule';
+            if (!/[a-z]/.test(val)) return 'Doit contenir une minuscule';
             if (!/[0-9]/.test(val)) return 'Doit contenir un chiffre';
+            if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val)) return 'Doit contenir un caractère spécial';
             return true;
+        },
+        password_confirm: (val, input) => {
+            const form = input.closest('form');
+            const pwd = form?.querySelector('[name="password"], [name="new_password"]')?.value;
+            return val === pwd || 'Les mots de passe ne correspondent pas';
         }
     },
 
@@ -23,7 +30,7 @@ const validation = {
         for (const check of checks) {
             const rule = this.rules[check];
             if (rule) {
-                const result = rule(val);
+                const result = rule(val, input);
                 if (result !== true) {
                     error = result;
                     break;

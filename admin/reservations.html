@@ -67,23 +67,33 @@
     <script src="../js/modal.js"></script>
     <script src="../js/admin.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            API.baseUrl = '../php/api/';
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!await Admin.requireAuth()) return;
             loadReservations();
 
             document.getElementById('status-filter').addEventListener('change', (e) => loadReservations(e.target.value));
         });
 
         async function loadReservations(status = '') {
-            const res = await API.get('admin/index.php', { resource: 'reservations', action: 'list', status });
-            if (res.success) {
-                const tbody = document.querySelector('#reservations-table tbody');
-                tbody.innerHTML = res.data.reservations.map(r => `
+            const params = { resource: 'reservations', action: 'list' };
+            if (status) params.statut = status;
+
+            const res = await API.get('admin/index.php', params);
+            const tbody = document.querySelector('#reservations-table tbody');
+            if (!res.success) {
+                notify.error(res.error);
+                return;
+            }
+            if (res.data.reservations.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center p-6">Aucune réservation trouvée.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = res.data.reservations.map(r => `
                     <tr>
                         <td><b>RES-${r.id_reservation}</b></td>
                         <td>${r.prenom} ${r.nom}</td>
                         <td>n°${r.numero} (${r.type})</td>
-                        <td><small>${new Date(r.date_debut).toLocaleDateString()} - ${new Date(r.date_fin).toLocaleDateString()}</small></td>
+                        <td><small>${new Date(r.date_debut).toLocaleDateString()} (${r.heure_arrivee ? r.heure_arrivee.substring(0, 5) : '15:00'})<br>${new Date(r.date_fin).toLocaleDateString()} (${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'})</small></td>
                         <td>${r.montant_total} €</td>
                         <td>
                             <select class="form-select btn-sm" style="width:auto;" onchange="updateStatus(${r.id_reservation}, this.value)">
@@ -98,11 +108,10 @@
                         </td>
                     </tr>
                 `).join('');
-            }
         }
 
         async function updateStatus(id, status) {
-            const res = await API.post('admin/index.php?resource=reservations&action=update', { id, statut: status });
+            const res = await API.post('admin/index.php?resource=reservations&action=updateStatut', { id, statut: status });
             if (res.success) notify.success(res.message);
             else notify.error(res.error);
         }
@@ -121,8 +130,8 @@
                                 <b>Tel:</b> ${r.telephone}
                             </div>
                             <div>
-                                <b>Arrivée:</b> ${new Date(r.date_debut).toLocaleDateString()}<br>
-                                <b>Départ:</b> ${new Date(r.date_fin).toLocaleDateString()}<br>
+                                <b>Arrivée:</b> ${new Date(r.date_debut).toLocaleDateString()} à ${r.heure_arrivee ? r.heure_arrivee.substring(0, 5) : '15:00'}<br>
+                                <b>Départ:</b> ${new Date(r.date_fin).toLocaleDateString()} à ${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'}<br>
                                 <b>Total:</b> ${r.montant_total} €
                             </div>
                         </div>

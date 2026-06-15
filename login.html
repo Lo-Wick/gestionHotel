@@ -28,6 +28,7 @@
             <div class="auth-logo">CÉLESTIA <span>HOTEL</span></div>
             <h1>Bon retour parmi nous</h1>
             <p class="auth-subtitle">Connectez-vous pour gérer vos réservations.</p>
+            <p id="redirect-hint" class="text-sm text-secondary mb-4" style="display:none;">Vous devez être connecté pour accéder à cette page.</p>
 
             <form id="login-form">
                 <div class="form-group">
@@ -91,12 +92,19 @@
                 <div>
                     <h4>Contact</h4>
                     <ul>
-                        <li><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</li>
-                        <li><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</li>
-                        <li><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</li>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
                     </ul>
                 </div>
-
+                <div>
+                    <h4>Suivez-nous</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
+                    </div>
+                </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
@@ -142,12 +150,22 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            const redirect = new URLSearchParams(window.location.search).get('redirect');
+            if (redirect) {
+                const hint = document.getElementById('redirect-hint');
+                if (hint) hint.style.display = 'block';
+            }
+
             validation.setupForm('login-form', async (data) => {
                 const response = await API.post('auth.php?action=login', data);
                 if (response.success) {
                     notify.success(response.message);
                     setTimeout(() => {
-                        window.location.href = response.user.role === 'admin' ? 'admin/index.html' : 'profil.html';
+                        if (redirect) {
+                            window.location.href = redirect;
+                        } else {
+                            window.location.href = response.user.role === 'admin' ? 'admin/index.html' : 'profil.html';
+                        }
                     }, 1000);
                 } else {
                     notify.error(response.error);

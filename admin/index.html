@@ -88,15 +88,7 @@
     <script src="../js/admin.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            // Override API base for admin
-            API.baseUrl = '../php/api/';
-
-            // Check admin auth
-            const auth = await API.get('auth.php', { action: 'check' });
-            if (!auth.logged_in || auth.user.role !== 'admin') {
-                window.location.href = '../login.html';
-                return;
-            }
+            if (!await Admin.requireAuth()) return;
 
             Admin.loadStats();
             loadRecentReservations();

@@ -36,8 +36,8 @@
             <div class="table-wrapper">
                 <div class="table-header">
                     <div class="flex gap-4">
-                        <input type="text" placeholder="Rechercher par n°..." class="form-input" style="width: 250px;">
-                        <select class="form-select" style="width: 150px;">
+                        <input type="text" placeholder="Rechercher par n°..." class="form-input" style="width: 250px;" id="room-search">
+                        <select class="form-select" style="width: 150px;" id="room-type-filter">
                             <option value="">Tous les types</option>
                             <option value="Standard">Standard</option>
                             <option value="Confort">Confort</option>
@@ -69,9 +69,10 @@
     <script src="../js/modal.js"></script>
     <script src="../js/admin.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            API.baseUrl = '../php/api/';
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!await Admin.requireAuth()) return;
             Admin.loadRoomsTable();
+            Admin.setupRoomFilters();
         });
 
         function openRoomModal(room = null) {
@@ -137,12 +138,7 @@
             }
         }
 
-        // Expose edit function
-        Admin.editRoom = (id) => {
-            API.get('chambres.php', { action: 'detail', id }).then(res => {
-                if (res.success) openRoomModal(res.chambre);
-            });
-        };
+        // editRoom géré dans admin.js
     </script>
 </body>
 

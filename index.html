@@ -46,9 +46,8 @@
         <section class="hero">
             <div class="container">
                 <div class="hero-content slide-up">
-                    <h1>L'art de vivre <span>d'exception</span> au cœur de la ville.</h1>
-                    <p>Découvrez un havre de paix où le luxe rencontre la sérénité. Des chambres élégantes conçues pour
-                        votre confort ultime.</p>
+                    <h1>Une expérience <span>hors du temps</span> au cœur de Paris.</h1>
+                    <p>Évadez-vous dans un écrin de calme et de volupté. Découvrez nos chambres d'exception et profitez de services haut de gamme sur mesure pour un séjour inoubliable.</p>
 
                     <div class="hero-search">
                         <form action="chambres.html" method="GET" class="search-grid">
@@ -119,7 +118,117 @@
 
                 <div class="grid grid-3 gap-8" id="featured-rooms">
                     <!-- Loaded via JS -->
-                    <div class="spinner"></div>
+                    <div class="loading-state" role="status">
+                        <div class="spinner"></div>
+                        <p>Chargement de nos chambres vedettes…</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Bar -->
+        <section class="stats-bar" aria-label="Chiffres clés de l'hôtel">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">Chambres & Suites</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">37</span>
+                        <span class="stat-label">Années d'excellence</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">4.8</span>
+                        <span class="stat-label">Note moyenne clients</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">12k+</span>
+                        <span class="stat-label">Séjours accueillis</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-image">
+                        <img src="assets/img/room_suite.png" alt="Intérieur luxueux du Célestia Hotel">
+                        <div class="about-badge">
+                            <strong>Depuis 1987</strong>
+                            <span>L'art de l'hospitalité parisienne</span>
+                        </div>
+                    </div>
+                    <div class="about-content">
+                        <h2>Notre Histoire & Notre Engagement</h2>
+                        <p class="lead">Niché entre les Champs-Élysées et le Trocadéro, le Célestia Hotel est bien plus qu'un hébergement — c'est une expérience où chaque détail compte.</p>
+                        <p>Fondé par la famille Moreau, notre établissement allie l'élégance de l'architecture haussmannienne à un confort contemporain. Nos équipes, formées à l'excellence, veillent à ce que chaque séjour soit unique, que vous veniez pour affaires ou pour le plaisir.</p>
+                        <ul class="about-features">
+                            <li><span class="material-symbols-outlined">check_circle</span> Rénovation complète en 2023</li>
+                            <li><span class="material-symbols-outlined">check_circle</span> Label « Green Key » éco-responsable</li>
+                            <li><span class="material-symbols-outlined">check_circle</span> Spa & restaurant gastronomique</li>
+                            <li><span class="material-symbols-outlined">check_circle</span> Parking privé sécurisé</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="section" style="background: var(--color-beige-light)">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Ce que disent nos clients</h2>
+                    <p>Des milliers de voyageurs nous font confiance pour leurs séjours parisiens.</p>
+                </div>
+                <div class="testimonial-grid">
+                    <article class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <blockquote>« Un havre de paix au cœur de Paris. La chambre était sublime, le petit-déjeuner exceptionnel. »</blockquote>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">ML</div>
+                            <div>
+                                <strong>Marie L.</strong>
+                                <span>Suite — Mars 2026</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <blockquote>« Service impeccable pour mon voyage d'affaires. Wi-Fi rapide, check-in express, tout était parfait. »</blockquote>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">JD</div>
+                            <div>
+                                <strong>Jean D.</strong>
+                                <span>Confort — Février 2026</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <blockquote>« Notre escapade romantique a dépassé toutes nos attentes. Le spa est un must absolu ! »</blockquote>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">SC</div>
+                            <div>
+                                <strong>Sophie &amp; Claude</strong>
+                                <span>Présidentielle — Janvier 2026</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Prêt à vivre l'expérience Célestia ?</h2>
+                <p>Réservez dès maintenant et profitez de notre meilleur tarif garanti, avec annulation flexible.</p>
+                <div class="cta-actions">
+                    <a href="chambres.html" class="btn btn-secondary btn-lg">Explorer nos chambres</a>
+                    <a href="reservation.html" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.5); color: white;">Réserver directement</a>
                 </div>
             </div>
         </section>
@@ -143,12 +252,19 @@
                 <div>
                     <h4>Contact</h4>
                     <ul>
-                        <li><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</li>
-                        <li><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</li>
-                        <li><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</li>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
                     </ul>
                 </div>
-
+                <div>
+                    <h4>Suivez-nous</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
+                    </div>
+                </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
