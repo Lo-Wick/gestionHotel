@@ -14,7 +14,13 @@ class Chambre {
 
     // Récupérer toutes les chambres avec filtres optionnels
     public function getAll(array $filters = []): array {
-        $sql = "SELECT * FROM chambre WHERE 1=1";
+        $sql = "SELECT *, 
+                (SELECT COUNT(*) FROM reservation r 
+                 WHERE r.id_chambre = chambre.id_chambre 
+                 AND r.statut IN ('Confirmée', 'En attente') 
+                 AND r.date_debut <= CURDATE() AND r.date_fin > CURDATE()
+                ) > 0 AS occupee_aujourdhui 
+                FROM chambre WHERE 1=1";
         $params = [];
 
         if (!empty($filters['type'])) {

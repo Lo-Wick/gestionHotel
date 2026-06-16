@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Profil | Célestia Hotel</title>
+    <title>Mon Profil | Cocotel</title>
     <meta name="description" content="Gérez votre profil, consultez vos réservations et modifiez vos informations personnelles.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
@@ -20,7 +20,7 @@
         <div class="container">
             <a href="index.html" class="navbar-brand">
                 <div class="brand-icon">C</div>
-                <span>CÉLESTIA <b>HOTEL</b></span>
+                <span>COCOTEL</span>
             </a>
             <div class="hamburger" id="hamburger-btn" role="button" aria-label="Menu" tabindex="0">
                 <span></span><span></span><span></span>
@@ -152,7 +152,7 @@
                                         <label class="form-label" for="prof-tel">Téléphone</label>
                                         <div class="input-with-icon">
                                             <span class="material-symbols-outlined input-icon">call</span>
-                                            <input type="tel" name="telephone" id="prof-tel" class="form-input" placeholder="+33 6 XX XX XX XX" autocomplete="tel">
+                                            <input type="tel" name="telephone" id="prof-tel" class="form-input" placeholder="+261 34 XX XXX XX" autocomplete="tel">
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary" id="save-profile-btn">
@@ -230,7 +230,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <div class="footer-brand">CÉLESTIA <span>HOTEL</span></div>
+                    <div class="footer-brand">COCOTEL</div>
                     <p>Luxe, calme et volupté. L'adresse de référence pour vos séjours d'affaires et de loisirs.</p>
                 </div>
                 <div>
@@ -244,9 +244,9 @@
                 <div>
                     <h4>Contact</h4>
                     <ul>
-                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
-                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
-                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> Tsianolondroa, Fianarantsoa, Madagascar</a></li>
+                        <li><a href="tel:+261341234567"><span class="material-symbols-outlined">call</span> +261 34 12 345 67</a></li>
+                        <li><a href="mailto:contact@cocotel.mg"><span class="material-symbols-outlined">mail</span> contact@cocotel.mg</a></li>
                     </ul>
                 </div>
                 <div>
@@ -259,7 +259,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
+                <p>&copy; 2026 Cocotel. Tous droits réservés.</p>
                 <div class="flex gap-6">
                     <a href="#">Mentions Légales</a>
                     <a href="#">Confidentialité</a>
@@ -376,7 +376,7 @@
                         <div>au ${new Date(r.date_fin).toLocaleDateString('fr-FR')} à ${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'}</div>
                     </td>
                     <td><span class="badge ${getStatutBadge(r.statut)}">${r.statut}</span></td>
-                    <td class="res-table-total">${r.montant_total} €</td>
+                    <td class="res-table-total">${r.montant_total} Ar</td>
                     <td>
                         <div class="flex gap-2" style="flex-wrap:wrap;">
                             <a href="panier.html?id=${r.id_reservation}" class="btn btn-sm btn-ghost">

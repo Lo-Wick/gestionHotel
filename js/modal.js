@@ -12,11 +12,21 @@ const modal = {
             const container = document.createElement('div');
             container.id = 'modal-container';
             container.className = 'modal';
+            container.setAttribute('role', 'dialog');
+            container.setAttribute('aria-modal', 'true');
+            container.setAttribute('aria-labelledby', 'modal-title');
 
             document.body.appendChild(backdrop);
             document.body.appendChild(container);
 
             backdrop.addEventListener('click', () => this.close());
+            
+            // Close on ESC key press
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && container.classList.contains('active')) {
+                    this.close();
+                }
+            });
         }
     },
 
@@ -27,8 +37,8 @@ const modal = {
 
         container.innerHTML = `
             <div class="modal-header">
-                <h3>${title}</h3>
-                <button class="modal-close">&times;</button>
+                <h3 id="modal-title">${title}</h3>
+                <button class="modal-close" aria-label="Fermer la boîte de dialogue">&times;</button>
             </div>
             <div class="modal-body">
                 ${content}
@@ -40,6 +50,12 @@ const modal = {
 
         backdrop.classList.add('active');
         container.classList.add('active');
+
+        // Focus first button/input inside modal for accessibility
+        setTimeout(() => {
+            const interactive = container.querySelector('button, input, select, textarea, a');
+            if (interactive) interactive.focus();
+        }, 50);
 
         container.querySelector('.modal-close').onclick = () => {
             this.close();

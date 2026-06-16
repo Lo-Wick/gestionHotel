@@ -142,11 +142,11 @@ const Booking = {
 
         const room = this.currentRoom;
         const esc = (v) => this.escapeHtml(v);
-        const description = room.description || "Profitez d'un séjour inoubliable au sein de notre établissement. Cette chambre décorée avec soin allie confort moderne et authenticité parisienne.";
+        const description = room.description || "Profitez d'un séjour inoubliable au sein de notre établissement. Cette chambre décorée avec soin allie confort moderne et authenticité malgache.";
         const isAvailable = room.disponibilite == 1 || room.disponibilite === true;
         const imgSrc = room.image_url || 'assets/img/room_standard.png';
 
-        document.title = `${this.getTypeLabel(room.type)} n°${room.numero} | Célestia Hotel`;
+        document.title = `${this.getTypeLabel(room.type)} n°${room.numero} | Cocotel`;
 
         const breadcrumbCurrent = document.querySelector('.breadcrumb .current');
         if (breadcrumbCurrent) {
@@ -155,11 +155,52 @@ const Booking = {
 
         el.setAttribute('aria-busy', 'false');
 
+        // Get images based on room type, fallback to default if not found
+        let images = [];
+        const typeStr = room.type ? room.type.toLowerCase() : 'standard';
+        
+        if (typeStr.includes('suite') || typeStr.includes('présidentielle')) {
+            images = [
+                'assets/img/room_suite_bed.png',
+                'assets/img/room_suite_salon.png',
+                'assets/img/room_suite_bathroom.png'
+            ];
+        } else if (typeStr.includes('confort')) {
+            images = [
+                'assets/img/room_confort_bed.png',
+                'assets/img/room_confort_vue.png',
+                'assets/img/room_confort_bathroom.png'
+            ];
+        } else {
+            images = [
+                'assets/img/room_standard_bed.png',
+                'assets/img/room_standard_vue.png',
+                'assets/img/room_standard_bathroom.png'
+            ];
+        }
+
+        // Generate carousel HTML
+        let slidesHTML = '';
+        let dotsHTML = '';
+        images.forEach((img, idx) => {
+            slidesHTML += `<div class="carousel-slide ${idx === 0 ? 'active' : ''}">
+                              <img src="${esc(img)}" alt="${esc(this.getTypeLabel(room.type))} vue ${idx+1}">
+                           </div>`;
+            dotsHTML += `<div class="carousel-dot ${idx === 0 ? 'active' : ''}" data-idx="${idx}"></div>`;
+        });
+
         el.innerHTML = `
             <div class="chambre-detail-layout slide-up">
                 <div class="detail-main">
-                    <div class="detail-image-wrap">
-                        <img src="${esc(imgSrc)}" class="main-img" alt="${esc(this.getTypeLabel(room.type))} — chambre n°${esc(room.numero)}">
+                    <div class="detail-image-wrap" id="room-carousel">
+                        <div class="carousel-container">
+                            ${slidesHTML}
+                        </div>
+                        <button class="carousel-btn prev" aria-label="Image précédente"><span class="material-symbols-outlined">chevron_left</span></button>
+                        <button class="carousel-btn next" aria-label="Image suivante"><span class="material-symbols-outlined">chevron_right</span></button>
+                        <div class="carousel-nav">
+                            ${dotsHTML}
+                        </div>
                         <div class="detail-badges">
                             <span class="badge badge-type">${esc(room.type)}</span>
                             <span class="badge ${isAvailable ? 'badge-success' : 'badge-warning'}">
@@ -212,8 +253,8 @@ const Booking = {
                         </div>
 
                         <div class="detail-story">
-                            <h3>L'expérience Célestia</h3>
-                            <p>Depuis 1987, le Célestia Hotel accueille voyageurs exigeants au cœur de Paris. Chaque chambre est pensée pour allier élégance intemporelle et confort contemporain — draps en coton égyptien, art local sélectionné et vue sur les toits parisiens.</p>
+                            <h3>L'expérience Cocotel</h3>
+                            <p>Depuis 2016, le Cocotel accueille les voyageurs au cœur de Fianarantsoa, Madagascar. Chaque chambre est pensée pour allier élégance et confort — literie premium, artisanat malgache sélectionné et vue sur les collines verdoyantes de la région Matsiatra Ambony.</p>
                         </div>
                     </div>
                 </div>
@@ -225,7 +266,7 @@ const Booking = {
                         </div>
                         <div class="summary-card-body">
                             <div class="price-large">
-                                <span class="price-value">${esc(parseFloat(room.prix_nuit).toFixed(0))} €</span>
+                                <span class="price-value">${esc(parseFloat(room.prix_nuit).toFixed(0))} Ar</span>
                                 <span class="price-unit">/ nuit</span>
                             </div>
                             <p class="text-xs text-secondary text-center mb-4">Taxes et TVA incluses · Paiement sécurisé</p>
@@ -257,7 +298,73 @@ const Booking = {
                         </blockquote>
                     </div>
                 </div>
+
             </div>`;
+
+        this.initCarousel();
+
+        // Check if there are parameters in URL (from search)
+        const urlParams = new URLSearchParams(window.location.search);
+        const checkin = urlParams.get('date_debut');
+        const checkout = urlParams.get('date_fin');
+
+        if (checkin) document.getElementById('date_debut').value = checkin;
+        if (checkout) document.getElementById('date_fin').value = checkout;
+
+        this.setupBookingForm();
+        this.updatePricing();
+    },
+
+    initCarousel() {
+        const carousel = document.getElementById('room-carousel');
+        if (!carousel) return;
+
+        const slides = carousel.querySelectorAll('.carousel-slide');
+        const dots = carousel.querySelectorAll('.carousel-dot');
+        const btnPrev = carousel.querySelector('.carousel-btn.prev');
+        const btnNext = carousel.querySelector('.carousel-btn.next');
+        let currentIdx = 0;
+
+        const showSlide = (idx) => {
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            
+            slides[idx].classList.add('active');
+            if (dots[idx]) dots[idx].classList.add('active');
+            currentIdx = idx;
+        };
+
+        if (btnPrev) {
+            btnPrev.addEventListener('click', () => {
+                let idx = currentIdx - 1;
+                if (idx < 0) idx = slides.length - 1;
+                showSlide(idx);
+            });
+        }
+
+        if (btnNext) {
+            btnNext.addEventListener('click', () => {
+                let idx = currentIdx + 1;
+                if (idx >= slides.length) idx = 0;
+                showSlide(idx);
+            });
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                const idx = parseInt(e.target.getAttribute('data-idx'));
+                showSlide(idx);
+            });
+        });
+        
+        // Auto advance every 5s
+        setInterval(() => {
+            if (document.visibilityState === 'visible') {
+                let idx = currentIdx + 1;
+                if (idx >= slides.length) idx = 0;
+                showSlide(idx);
+            }
+        }, 5000);
     },
 
     setupBookingForm() {
@@ -286,7 +393,7 @@ const Booking = {
 
             if (nights > 0) {
                 const total = nights * this.currentRoom.prix_nuit;
-                priceEl.textContent = `${total} € (${nights} nuits)`;
+                priceEl.textContent = `${total} Ar (${nights} nuits)`;
             } else {
                 priceEl.textContent = 'Dates invalides';
             }

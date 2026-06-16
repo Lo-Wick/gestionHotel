@@ -48,7 +48,7 @@ function jsonResponse(array $data, int $statusCode = 200): void {
 
 // Formater le prix
 function formatPrix(float $montant): string {
-    return number_format($montant, 2, ',', ' ') . ' €';
+    return number_format($montant, 0, '.', ' ') . ' Ar';
 }
 
 // Formater la date

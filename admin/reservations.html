@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion Réservations | Célestia Admin</title>
+    <title>Gestion Réservations | Cocotel Admin</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/responsive.css">
@@ -14,7 +14,7 @@
 
     <div class="admin-layout">
         <aside class="admin-sidebar">
-            <div class="admin-sidebar-brand">CÉLESTIA ADMIN</div>
+            <div class="admin-sidebar-brand">COCOTEL ADMIN</div>
             <nav class="admin-sidebar-nav">
                 <a href="index.html"><span class="material-symbols-outlined">analytics</span> Tableau de bord</a>
                 <a href="chambres.html"><span class="material-symbols-outlined">hotel</span> Chambres</a>
@@ -94,7 +94,7 @@
                         <td>${r.prenom} ${r.nom}</td>
                         <td>n°${r.numero} (${r.type})</td>
                         <td><small>${new Date(r.date_debut).toLocaleDateString()} (${r.heure_arrivee ? r.heure_arrivee.substring(0, 5) : '15:00'})<br>${new Date(r.date_fin).toLocaleDateString()} (${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'})</small></td>
-                        <td>${r.montant_total} €</td>
+                        <td>${r.montant_total} Ar</td>
                         <td>
                             <select class="form-select btn-sm" style="width:auto;" onchange="updateStatus(${r.id_reservation}, this.value)">
                                 <option value="En attente" ${r.statut === 'En attente' ? 'selected' : ''}>En attente</option>
@@ -132,7 +132,7 @@
                             <div>
                                 <b>Arrivée:</b> ${new Date(r.date_debut).toLocaleDateString()} à ${r.heure_arrivee ? r.heure_arrivee.substring(0, 5) : '15:00'}<br>
                                 <b>Départ:</b> ${new Date(r.date_fin).toLocaleDateString()} à ${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'}<br>
-                                <b>Total:</b> ${r.montant_total} €
+                                <b>Total:</b> ${r.montant_total} Ar
                             </div>
                         </div>
                         <div class="mt-4">

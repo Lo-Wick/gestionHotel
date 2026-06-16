@@ -73,29 +73,29 @@ CREATE TABLE paiement (
 
 -- Chambres
 INSERT INTO chambre (numero, type, prix_nuit, capacite, description, disponibilite, image_url) VALUES
-('101', 'Standard', 80.00, 2, 'Échappez au tumulte urbain dans cette chambre Standard lumineuse et chaleureuse. Elle comprend un lit double avec couette douillette, une climatisation silencieuse, un espace de travail ergonomique et un accès Wi-Fi haut débit. Une vue apaisante sur le jardin arboré intérieur complète ce cocon de tranquillité.', TRUE, 'assets/img/room_standard.png'),
-('102', 'Standard', 80.00, 2, 'Chambre lumineuse avec vue sur jardin, lit double, salle de bain privée et climatisation silencieuse.', TRUE, 'assets/img/room_standard.png'),
-('201', 'Confort', 120.00, 3, 'Alliez espace et raffinement dans notre chambre Confort. Offrant une literie d\'exception de qualité hôtelière supérieure, un canapé de relaxation et un minibar garni de rafraîchissements. Profitez d\'une salle de bain moderne avec baignoire pour vous détendre après vos visites, ainsi que d\'une machine à café Nespresso pour des réveils savoureux.', TRUE, 'assets/img/room_confort.png'),
-('202', 'Confort', 120.00, 3, 'Chambre confort avec balcon vue mer, lit king size, coin salon et machine à café Nespresso.', TRUE, 'assets/img/room_confort.png'),
-('301', 'Suite', 200.00, 4, 'Vivez l\'expérience ultime de la Suite Célestia. Spacieuse et baignée de lumière, elle propose un salon indépendant élégamment meublé, un très grand lit King Size et une salle de bain de luxe équipée d\'une baignoire spa. Profitez de notre room service haut de gamme disponible 24h/24 et de peignoirs moelleux en coton égyptien.', TRUE, 'assets/img/room_suite.png'),
-('302', 'Suite', 200.00, 4, 'Suite panoramique avec vue 180°, salon, baignoire spa et salle de bain en marbre.', TRUE, 'assets/img/room_suite.png'),
-('401', 'Présidentielle', 500.00, 6, 'L\'expression absolue du luxe absolu. Notre Suite Présidentielle d\'exception vous propose deux chambres somptueuses, un salon de réception majestueux avec salle à manger privée, un bar premium et une vaste terrasse avec jacuzzi offrant une vue panoramique sur les toits de Paris. Profitez des services exclusifs d\'un majordome dédié 24h/24, d\'un room service gastronomique illimité et d\'un transfert privé en limousine.', TRUE, 'assets/img/room_suite.png'),
-('402', 'Présidentielle', 500.00, 6, 'Appartement présidentiel d\'exception : deux chambres de maître, salle à manger, cuisine privée, jacuzzi et terrasse panoramique.', TRUE, 'assets/img/room_suite.png');
+('101', 'Standard', 80000.00, 2, 'Échappez au tumulte de la ville dans cette chambre Standard lumineuse et chaleureuse. Elle comprend un lit double confortable, une climatisation silencieuse, un espace de travail ergonomique et un accès Wi-Fi haut débit. Une vue apaisante sur le jardin tropical arboré complète ce cocon de tranquillité.', TRUE, 'assets/img/room_standard.png'),
+('102', 'Standard', 80000.00, 2, 'Chambre lumineuse avec vue sur le jardin tropical, lit double, salle de bain privée et climatisation.', TRUE, 'assets/img/room_standard.png'),
+('201', 'Confort', 120000.00, 3, 'Alliez espace et raffinement dans notre chambre Confort. Offrant une literie de qualité supérieure, un coin de relaxation et un minibar garni de rafraîchissements. Profitez d\'une salle de bain moderne pour vous détendre après vos visites, ainsi que d\'une machine à café pour des réveils savoureux.', TRUE, 'assets/img/room_confort.png'),
+('202', 'Confort', 120000.00, 3, 'Chambre confort avec terrasse et vue sur les collines de Fianarantsoa, lit king size, coin salon et machine à café.', TRUE, 'assets/img/room_confort.png'),
+('301', 'Suite', 200000.00, 4, 'Vivez l\'expérience ultime de la Suite Cocotel. Spacieuse et baignée de lumière, elle propose un salon indépendant confortablement meublé, un très grand lit King Size et une salle de bain équipée d\'une baignoire spa. Profitez de nos services attentionnés et de peignoirs moelleux.', TRUE, 'assets/img/room_suite.png'),
+('302', 'Suite', 200000.00, 4, 'Suite panoramique avec vue sur la Haute Ville de Fianarantsoa, salon, baignoire spa et salle de bain spacieuse.', TRUE, 'assets/img/room_suite.png'),
+('401', 'Présidentielle', 500000.00, 6, 'L\'expression absolue du confort et de l\'hospitalité. Notre Suite Présidentielle d\'exception vous propose deux chambres somptueuses, un salon de réception majestueux avec salle à manger privée, un bar premium et une vaste terrasse avec jacuzzi offrant une vue panoramique sur Fianarantsoa. Profitez de nos services exclusifs pour un séjour inoubliable.', TRUE, 'assets/img/room_suite.png'),
+('402', 'Présidentielle', 500000.00, 6, 'Appartement présidentiel d\'exception : deux chambres de maître, salle à manger, cuisine privée, jacuzzi et terrasse avec panorama unique sur la région.', TRUE, 'assets/img/room_suite.png');
 
 -- Admin (password: Admin123!)
 INSERT INTO client (nom, prenom, email, telephone, password, role) VALUES
-('Admin', 'Hôtel', 'admin@hotel.com', '+33600000000', '$2y$10$9qjy4/PjlcqfYU0TjbhNde68/v.Od1cfFHHUQT8UsbG0eggkjQfzm', 'admin');
+('Admin', 'Hôtel', 'admin@cocotel.mg', '+261340000000', '$2y$10$9qjy4/PjlcqfYU0TjbhNde68/v.Od1cfFHHUQT8UsbG0eggkjQfzm', 'admin');
 
 -- Client test (password: Client123!)
 INSERT INTO client (nom, prenom, email, telephone, password, role) VALUES
-('Dupont', 'Jean', 'client@test.com', '+33612345678', '$2y$10$WcrOQ684t6SnzTEUeCjWp.zS/M82PT8LiLwsaw8dmadlEddEE1kRC', 'client');
+('Dupont', 'Jean', 'client@test.com', '+261321234567', '$2y$10$WcrOQ684t6SnzTEUeCjWp.zS/M82PT8LiLwsaw8dmadlEddEE1kRC', 'client');
 
 -- Réservations test
 INSERT INTO reservation (id_client, id_chambre, date_debut, date_fin, nombre_adultes, nombre_enfants, statut, montant_total, remarques) VALUES
-(2, 1, '2026-05-15', '2026-05-18', 2, 0, 'Confirmée', 240.00, 'Arrivée tardive prévue vers 22h'),
-(2, 3, '2026-06-01', '2026-06-05', 2, 1, 'En attente', 480.00, 'Lit bébé souhaité');
+(2, 1, '2026-05-15', '2026-05-18', 2, 0, 'Confirmée', 240000.00, 'Arrivée tardive prévue vers 22h'),
+(2, 3, '2026-06-01', '2026-06-05', 2, 1, 'En attente', 480000.00, 'Lit bébé souhaité');
 
 -- Paiements test
 INSERT INTO paiement (id_reservation, montant, mode_paiement, statut) VALUES
-(1, 240.00, 'Carte', 'Payé'),
-(2, 480.00, 'Mobile Money', 'En attente');
+(1, 240000.00, 'Carte', 'Payé'),
+(2, 480000.00, 'Mobile Money', 'En attente');

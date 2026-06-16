@@ -35,7 +35,7 @@ const Admin = {
             </div>
             <div class="stat-card">
                 <div class="stat-icon" style="background: var(--color-success-light); color: var(--color-success)"><span class="material-symbols-outlined">payments</span></div>
-                <div class="stat-value">${stats.reservations.chiffre_affaires.toLocaleString()} €</div>
+                <div class="stat-value">${stats.reservations.chiffre_affaires.toLocaleString()} Ar</div>
                 <div class="stat-label">Chiffre d'affaires</div>
             </div>
             <div class="stat-card">
@@ -72,7 +72,7 @@ const Admin = {
             ${(chambreStats.par_type || []).map(t => `
                 <div class="flex-between text-sm mb-2">
                     <span class="badge badge-primary">${t.type}</span>
-                    <span>${t.count} chambre(s) — ${Math.round(t.prix_moyen)} €/nuit</span>
+                    <span>${t.count} chambre(s) — ${Math.round(t.prix_moyen)}  Ar/nuit</span>
                 </div>
             `).join('')}
         `;
@@ -95,25 +95,32 @@ const Admin = {
                 return;
             }
 
-            tableBody.innerHTML = response.data.chambres.map(room => `
-                <tr>
-                    <td>${room.numero}</td>
-                    <td><span class="badge badge-primary">${room.type}</span></td>
-                    <td>${room.prix_nuit} €</td>
-                    <td>${room.capacite} pers.</td>
-                    <td>
-                        <span class="badge ${room.disponibilite ? 'badge-success' : 'badge-error'}">
-                            ${room.disponibilite ? 'Libre' : 'Occupée'}
-                        </span>
-                    </td>
-                    <td>
-                        <div class="table-actions">
-                            <button class="btn btn-sm btn-ghost" title="Modifier" onclick="Admin.editRoom(${room.id_chambre})">✏️</button>
-                            <button class="btn btn-sm btn-ghost text-danger" title="Supprimer" onclick="Admin.deleteRoom(${room.id_chambre})">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+            tableBody.innerHTML = response.data.chambres.map(room => {
+                let statusBadge = '';
+                if (room.disponibilite == 0 || room.disponibilite === false) {
+                    statusBadge = '<span class="badge badge-error">Hors service</span>';
+                } else if (room.occupee_aujourdhui == 1 || room.occupee_aujourdhui === true) {
+                    statusBadge = '<span class="badge badge-warning">Occupée aujourd\'hui</span>';
+                } else {
+                    statusBadge = '<span class="badge badge-success">Libre</span>';
+                }
+
+                return `
+                    <tr>
+                        <td>${room.numero}</td>
+                        <td><span class="badge badge-primary">${room.type}</span></td>
+                        <td>${room.prix_nuit} Ar</td>
+                        <td>${room.capacite} pers.</td>
+                        <td>${statusBadge}</td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="btn btn-sm btn-ghost" title="Modifier" onclick="Admin.editRoom(${room.id_chambre})">✏️</button>
+                                <button class="btn btn-sm btn-ghost text-danger" title="Supprimer" onclick="Admin.deleteRoom(${room.id_chambre})">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         } else if (response.error) {
             notify.error(response.error);
         }
@@ -188,7 +195,7 @@ const Admin = {
                 <h4>Réservations (${reservations.length})</h4>
                 ${reservations.length === 0
                     ? '<p class="text-secondary">Aucune réservation.</p>'
-                    : reservations.map(r => `<p class="text-sm">RES-${r.id_reservation} — ${r.statut} — ${r.montant_total} €</p>`).join('')}
+                    : reservations.map(r => `<p class="text-sm">RES-${r.id_reservation} — ${r.statut} — ${r.montant_total} Ar</p>`).join('')}
             `,
             footer: `<button class="btn btn-primary" onclick="modal.close()">Fermer</button>`
         });
@@ -227,7 +234,7 @@ const Admin = {
                 <td>RES-${p.id_reservation}</td>
                 <td>${new Date(p.date_paiement).toLocaleDateString()}</td>
                 <td>${p.mode_paiement}</td>
-                <td><b>${p.montant} €</b></td>
+                <td><b>${p.montant} Ar</b></td>
                 <td><span class="badge badge-success">${p.statut}</span></td>
             </tr>
         `).join('');

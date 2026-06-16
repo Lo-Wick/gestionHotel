@@ -1,4 +1,4 @@
-# Célestia Hotel - Système de Réservation
+# Cocotel - Système de Réservation
 
 Application web complète de gestion hôtelière développée avec une architecture modulaire en PHP natif (PDO) et un frontend moderne en Vanilla CSS/JS.
 

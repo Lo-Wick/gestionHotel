@@ -13,7 +13,29 @@ const Filters = {
         const container = document.getElementById(containerId);
         if (!container) return;
 
-        container.innerHTML = '<div class="spinner"></div>';
+        // Skeleton loading cards for premium feel
+        container.innerHTML = `
+            <div class="card skeleton-card">
+                <div class="skeleton skeleton-image" style="margin-bottom: var(--space-4);"></div>
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-text" style="width: 90%;"></div>
+                <div class="skeleton skeleton-text" style="width: 70%; margin-bottom: var(--space-4);"></div>
+                <div style="display: flex; gap: var(--space-4);">
+                    <div class="skeleton skeleton-button"></div>
+                    <div class="skeleton skeleton-button"></div>
+                </div>
+            </div>
+            <div class="card skeleton-card">
+                <div class="skeleton skeleton-image" style="margin-bottom: var(--space-4);"></div>
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-text" style="width: 90%;"></div>
+                <div class="skeleton skeleton-text" style="width: 70%; margin-bottom: var(--space-4);"></div>
+                <div style="display: flex; gap: var(--space-4);">
+                    <div class="skeleton skeleton-button"></div>
+                    <div class="skeleton skeleton-button"></div>
+                </div>
+            </div>
+        `;
 
         const response = await API.get('chambres.php', { action: 'list', ...this.params });
 
@@ -54,7 +76,7 @@ const Filters = {
                             ${room.disponibilite ? 'Disponible' : 'Occupé'}
                         </span>
                     </div>
-                    <div class="card-price">${room.prix_nuit} €<small>/nuit</small></div>
+                    <div class="card-price">${room.prix_nuit} Ar<small>/nuit</small></div>
                 </div>
                 <div class="card-body">
                     <div class="card-subtitle">${room.type}</div>

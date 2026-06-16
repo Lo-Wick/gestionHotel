@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nos Chambres | Célestia Hotel</title>
+    <title>Nos Chambres | COCOTEL</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/responsive.css">
@@ -18,7 +18,7 @@
         <div class="container">
             <a href="index.html" class="navbar-brand">
                 <div class="brand-icon">C</div>
-                <span>CÉLESTIA <b>HOTEL</b></span>
+                <span>COCOTEL</span>
             </a>
             <div class="hamburger"><span></span><span></span><span></span></div>
             <div class="navbar-nav">
@@ -31,15 +31,15 @@
     </nav>
 
     <main class="main-content">
-        <header class="page-header" style="--header-bg: url('assets/img/hero_rooms.png')">
+        <header class="page-header" style="background-image: linear-gradient(135deg, rgba(11, 19, 41, 0.5), rgba(30, 58, 95, 0.4)), url('assets/img/hero_rooms.png')">
             <div class="container">
                 <div class="breadcrumb">
                     <a href="index.html">Accueil</a>
                     <span class="separator">/</span>
                     <span class="current">Nos Chambres</span>
                 </div>
-                <h1>Nos Chambres & Suites d'Élite</h1>
-                <p>Explorez notre collection exclusive d'espaces raffinés conçus pour votre bien-être absolu.</p>
+                <h1>Nos Chambres & Suites</h1>
+                <p>Découvrez notre sélection de chambres confortables pour votre séjour à Fianarantsoa.</p>
             </div>
         </header>
 
@@ -74,11 +74,11 @@
             <div class="filter-group">
                 <h4>Budget (/nuit)</h4>
                 <div class="price-range">
-                    <input type="range" name="prix_max" min="0" max="1000" step="50" value="1000"
+                    <input type="range" name="prix_max" min="0" max="1000000" step="50000" value="1000000"
                         id="price-range-input">
                     <div class="price-labels">
-                        <span>0 €</span>
-                        <span id="price-value-display">1000 €</span>
+                        <span>0 Ar</span>
+                        <span id="price-value-display">1 000 000 Ar</span>
                     </div>
                 </div>
             </div>
@@ -131,8 +131,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <div class="footer-brand">CÉLESTIA <span>HOTEL</span></div>
-                    <p>Luxe, calme et volupté. L'adresse de référence pour vos séjours d'affaires et de loisirs.</p>
+                    <div class="footer-brand">COCOTEL</div>
+                    <p>Calme, confort et convivialité. L'adresse de référence pour vos séjours à Fianarantsoa.</p>
                 </div>
                 <div>
                     <h4>Navigation</h4>
@@ -145,9 +145,9 @@
                 <div>
                     <h4>Contact</h4>
                     <ul>
-                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
-                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
-                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> Tsianolondroa, Fianarantsoa, Madagascar</a></li>
+                        <li><a href="tel:+261207550000"><span class="material-symbols-outlined">call</span> +261 20 75 500 00</a></li>
+                        <li><a href="mailto:contact@cocotel.mg"><span class="material-symbols-outlined">mail</span> contact@cocotel.mg</a></li>
                     </ul>
                 </div>
                 <div>
@@ -160,7 +160,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
+                <p>&copy; 2026 COCOTEL. Tous droits réservés.</p>
                 <div class="flex gap-6">
                     <a href="#">Mentions Légales</a>
                     <a href="#">Confidentialité</a>
@@ -183,7 +183,7 @@
             const priceInput = document.getElementById('price-range-input');
             const priceDisplay = document.getElementById('price-value-display');
             priceInput.addEventListener('input', () => {
-                priceDisplay.textContent = priceInput.value + ' €';
+                priceDisplay.textContent = Number(priceInput.value).toLocaleString('fr-FR') + ' Ar';
             });
 
             // Parse URL search params for initial filtering
