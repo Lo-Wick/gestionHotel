@@ -1,0 +1,74 @@
+/* ============================================
+   DARK MODE - Thème Sombre
+   ============================================ */
+
+[data-theme="dark"] {
+    --bg-body: #0F172A;
+    --bg-card: #1E293B;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --border-color: #334155;
+
+    --color-gray-50: #111827;
+    --color-gray-100: #1F2937;
+    --color-gray-200: #374151;
+    --color-gray-300: #4B5563;
+    --color-gray-400: #6B7280;
+    --color-gray-500: #9CA3AF;
+    --color-gray-600: #D1D5DB;
+    --color-gray-700: #E5E7EB;
+    --color-gray-800: #F3F4F6;
+    --color-gray-900: #F9FAFB;
+
+    --color-beige-light: #1E293B;
+    --color-beige: #334155;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5), 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5), 0 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .navbar {
+    background: rgba(15, 23, 42, 0.9);
+}
+
+[data-theme="dark"] .hero::before {
+    opacity: 0.1;
+}
+
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-textarea {
+    background-color: #0F172A;
+    color: #F8FAFC;
+}
+
+[data-theme="dark"] .btn-outline {
+    border-color: var(--color-secondary);
+    color: var(--color-secondary);
+}
+
+[data-theme="dark"] .btn-outline:hover {
+    background: var(--color-secondary);
+    color: #0F172A;
+}
+
+[data-theme="dark"] .table-header,
+[data-theme="dark"] thead th {
+    background-color: #111827;
+}
+
+[data-theme="dark"] tbody td {
+    border-bottom-color: #334155;
+}
+
+[data-theme="dark"] tbody tr:hover {
+    background-color: #1E293B;
+}
+
+[data-theme="dark"] .skeleton {
+    background: linear-gradient(90deg, #1E293B 25%, #334155 50%, #1E293B 75%);
+    background-size: 200% 100%;
+}

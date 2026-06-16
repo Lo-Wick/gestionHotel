@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil | Célestia Hotel</title>
+    <meta name="description" content="Gérez votre profil, consultez vos réservations et modifiez vos informations personnelles.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <nav class="navbar" id="main-navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-icon">C</div>
+                <span>CÉLESTIA <b>HOTEL</b></span>
+            </a>
+            <div class="hamburger" id="hamburger-btn" role="button" aria-label="Menu" tabindex="0">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="navbar-nav" id="main-nav">
+                <a href="index.html">Accueil</a>
+                <a href="chambres.html">Nos Chambres</a>
+                <a href="reservation.html">Réserver</a>
+                <div class="navbar-actions" id="auth-links"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+
+        <!-- Hero Profil -->
+        <section class="profil-hero">
+            <div class="container">
+                <div class="profil-hero-content slide-up">
+                    <div class="profil-avatar">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                    <div class="profil-hero-text">
+                        <h1>Bienvenue, <span id="user-name-title">…</span></h1>
+                        <p>Gérez vos informations personnelles et consultez l'historique de vos séjours.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Corps principal -->
+        <div class="container">
+            <div class="profil-layout">
+
+                <!-- ========== SIDEBAR ========== -->
+                <aside>
+                    <div class="profil-sidebar-card">
+                        <div class="profil-sidebar-header">
+                            <div class="profil-avatar-sm">
+                                <span class="material-symbols-outlined">person</span>
+                            </div>
+                            <div class="profil-sidebar-name" id="user-full-name">…</div>
+                            <div class="profil-sidebar-email" id="user-email-text">…</div>
+                        </div>
+
+                        <nav class="profil-sidebar-nav" aria-label="Navigation profil">
+                            <button class="profil-nav-btn tab active" data-target="reservations-tab" id="tab-reservations">
+                                <span class="material-symbols-outlined">calendar_today</span>
+                                Mes Réservations
+                            </button>
+                            <button class="profil-nav-btn tab" data-target="profile-tab" id="tab-profile">
+                                <span class="material-symbols-outlined">manage_accounts</span>
+                                Modifier mon profil
+                            </button>
+                        </nav>
+
+                        <div class="profil-sidebar-footer">
+                            <button class="btn btn-outline btn-block" id="dark-mode-toggle-btn" style="font-size:.8rem;">
+                                🌙 Mode Sombre
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- ========== CONTENU PRINCIPAL ========== -->
+                <div class="profil-main">
+
+                    <!-- TAB : Mes Réservations -->
+                    <div id="reservations-tab" class="tab-content active">
+                        <div class="reservations-table-wrap">
+                            <div class="reservations-table-header">
+                                <div style="display:flex;align-items:center;gap:.75rem;">
+                                    <span class="material-symbols-outlined" style="color:var(--color-primary);font-size:1.4rem;">hotel</span>
+                                    <h3>Mes Réservations</h3>
+                                </div>
+                                <span class="reservations-count-badge" id="res-count-badge">—</span>
+                            </div>
+                            <table id="my-reservations-table">
+                                <thead>
+                                    <tr>
+                                        <th>Chambre</th>
+                                        <th>Dates</th>
+                                        <th>Statut</th>
+                                        <th>Total</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="5" class="text-center" style="padding:3rem;">
+                                            <div class="spinner" style="margin:0 auto 1rem;"></div>
+                                            <p>Chargement de vos réservations…</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- TAB : Modifier le profil -->
+                    <div id="profile-tab" class="tab-content">
+
+                        <!-- Informations personnelles -->
+                        <div class="profil-section-card slide-up">
+                            <div class="profil-section-header">
+                                <span class="material-symbols-outlined">badge</span>
+                                <h3>Informations personnelles</h3>
+                            </div>
+                            <div class="profil-section-body">
+                                <form id="profile-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label" for="prof-prenom">Prénom</label>
+                                            <input type="text" name="prenom" id="prof-prenom" class="form-input" placeholder="Votre prénom" autocomplete="given-name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" for="prof-nom">Nom</label>
+                                            <input type="text" name="nom" id="prof-nom" class="form-input" placeholder="Votre nom" autocomplete="family-name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="prof-email">Adresse e-mail</label>
+                                        <div class="input-with-icon">
+                                            <span class="material-symbols-outlined input-icon">mail</span>
+                                            <input type="email" name="email" id="prof-email" class="form-input" placeholder="votre@email.com" autocomplete="email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="prof-tel">Téléphone</label>
+                                        <div class="input-with-icon">
+                                            <span class="material-symbols-outlined input-icon">call</span>
+                                            <input type="tel" name="telephone" id="prof-tel" class="form-input" placeholder="+33 6 XX XX XX XX" autocomplete="tel">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" id="save-profile-btn">
+                                        <span class="material-symbols-outlined">save</span>
+                                        Enregistrer les modifications
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Sécurité / Mot de passe -->
+                        <div class="profil-section-card slide-up" style="animation-delay:.1s;margin-top:1.5rem;">
+                            <div class="profil-section-header">
+                                <span class="material-symbols-outlined">lock</span>
+                                <h3>Sécurité &amp; Mot de passe</h3>
+                            </div>
+                            <div class="profil-section-body">
+                                <form id="password-form">
+                                    <div class="form-group">
+                                        <label class="form-label" for="prof-curr">Mot de passe actuel</label>
+                                        <div style="position:relative;">
+                                            <input type="password" name="current_password" id="prof-curr"
+                                                class="form-input" data-validate="required"
+                                                placeholder="••••••••" autocomplete="current-password">
+                                            <button type="button" class="btn-toggle-password"
+                                                onclick="App.togglePassword('prof-curr', this)" aria-label="Afficher/masquer">
+                                                <span class="material-symbols-outlined">visibility</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label" for="prof-new">Nouveau mot de passe</label>
+                                            <div style="position:relative;">
+                                                <input type="password" name="new_password" id="prof-new" class="form-input"
+                                                    data-validate="required|password"
+                                                    placeholder="••••••••" autocomplete="new-password">
+                                                <button type="button" class="btn-toggle-password"
+                                                    onclick="App.togglePassword('prof-new', this)" aria-label="Afficher/masquer">
+                                                    <span class="material-symbols-outlined">visibility</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" for="prof-conf">Confirmer</label>
+                                            <div style="position:relative;">
+                                                <input type="password" name="confirm_password" id="prof-conf"
+                                                    class="form-input" data-validate="required|password_confirm"
+                                                    placeholder="••••••••" autocomplete="new-password">
+                                                <button type="button" class="btn-toggle-password"
+                                                    onclick="App.togglePassword('prof-conf', this)" aria-label="Afficher/masquer">
+                                                    <span class="material-symbols-outlined">visibility</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-outline" id="save-password-btn">
+                                        <span class="material-symbols-outlined">key</span>
+                                        Mettre à jour le mot de passe
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /profile-tab -->
+
+                </div>
+                <!-- /profil-main -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">CÉLESTIA <span>HOTEL</span></div>
+                    <p>Luxe, calme et volupté. L'adresse de référence pour vos séjours d'affaires et de loisirs.</p>
+                </div>
+                <div>
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="chambres.html">Chambres</a></li>
+                        <li><a href="reservation.html">Réservation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Suivez-nous</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
+                <div class="flex gap-6">
+                    <a href="#">Mentions Légales</a>
+                    <a href="#">Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const response = await API.get('auth.php', { action: 'profile' });
+            if (!response.success) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const user = response.user;
+            document.getElementById('user-name-title').textContent = user.prenom;
+            document.getElementById('user-full-name').textContent = `${user.prenom} ${user.nom}`;
+            document.getElementById('user-email-text').textContent = user.email;
+
+            // Fill form
+            document.getElementById('prof-prenom').value = user.prenom;
+            document.getElementById('prof-nom').value = user.nom;
+            document.getElementById('prof-email').value = user.email;
+            document.getElementById('prof-tel').value = user.telephone || '';
+
+            // Load reservations
+            loadMyReservations();
+
+            // Tabs — compatibles avec les deux classes (tab ET profil-nav-btn)
+            document.querySelectorAll('.tab[data-target]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.tab[data-target]').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById(btn.dataset.target).classList.add('active');
+                });
+            });
+
+            // Update profile
+            validation.setupForm('profile-form', async (data) => {
+                const res = await API.post('auth.php?action=updateProfile', data);
+                if (res.success) notify.success(res.message);
+                else notify.error(res.error);
+            });
+
+            // Password form
+            validation.setupForm('password-form', async (data) => {
+                const res = await API.post('auth.php?action=changePassword', data);
+                if (res.success) {
+                    notify.success(res.message);
+                    document.getElementById('password-form').reset();
+                } else {
+                    notify.error(res.error);
+                }
+            });
+
+            // Dark mode toggle
+            const darkToggleBtn = document.getElementById('dark-mode-toggle-btn');
+            const updateDarkBtn = (theme) => {
+                darkToggleBtn.textContent = theme === 'dark' ? '☀️ Mode Clair' : '🌙 Mode Sombre';
+            };
+            darkToggleBtn.addEventListener('click', () => {
+                const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                updateDarkBtn(theme);
+            });
+            updateDarkBtn(localStorage.getItem('theme') || 'light');
+        });
+
+        async function loadMyReservations() {
+            const res = await API.get('reservations.php', { action: 'list' });
+            const tbody = document.querySelector('#my-reservations-table tbody');
+            const countBadge = document.getElementById('res-count-badge');
+
+            if (!res.success) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center" style="padding:2rem;">Impossible de charger vos réservations.</td></tr>';
+                notify.error(res.error);
+                return;
+            }
+
+            const reservations = res.data.reservations;
+            if (countBadge) countBadge.textContent = reservations.length + ' réservation' + (reservations.length !== 1 ? 's' : '');
+
+            if (reservations.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center" style="padding:4rem 2rem;">
+                            <span class="material-symbols-outlined" style="font-size:3rem;color:var(--color-gray-300);display:block;margin-bottom:1rem;">hotel</span>
+                            <p style="color:var(--color-gray-400);margin-bottom:1.5rem;">Aucune réservation pour le moment.</p>
+                            <a href="chambres.html" class="btn btn-primary">Explorer nos chambres</a>
+                        </td>
+                    </tr>`;
+                return;
+            }
+
+            tbody.innerHTML = reservations.map(r => `
+                <tr>
+                    <td>
+                        <div class="res-table-room-cell">
+                            <span class="res-table-room-type">${r.type}</span>
+                            <span class="res-table-room-num">N°${r.numero}</span>
+                        </div>
+                    </td>
+                    <td class="res-table-dates">
+                        <div>Du ${new Date(r.date_debut).toLocaleDateString('fr-FR')} à ${r.heure_arrivee ? r.heure_arrivee.substring(0, 5) : '15:00'}</div>
+                        <div>au ${new Date(r.date_fin).toLocaleDateString('fr-FR')} à ${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'}</div>
+                    </td>
+                    <td><span class="badge ${getStatutBadge(r.statut)}">${r.statut}</span></td>
+                    <td class="res-table-total">${r.montant_total} €</td>
+                    <td>
+                        <div class="flex gap-2" style="flex-wrap:wrap;">
+                            <a href="panier.html?id=${r.id_reservation}" class="btn btn-sm btn-ghost">
+                                <span class="material-symbols-outlined" style="font-size:.9rem;">visibility</span> Voir
+                            </a>
+                            ${r.statut === 'En attente' ? `<button class="btn btn-sm btn-danger" onclick="cancelBooking(${r.id_reservation})">Annuler</button>` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function getStatutBadge(statut) {
+            const map = {
+                'Confirmée':  'badge-success',
+                'Annulée':    'badge-error',
+                'Terminée':   'badge-info',
+                'En attente': 'badge-warning'
+            };
+            return map[statut] || 'badge-warning';
+        }
+
+        async function cancelBooking(id) {
+            modal.confirm(
+                'Annuler la réservation',
+                'Voulez-vous vraiment annuler cette réservation ? Annulation gratuite jusqu\'à 48h avant le séjour.',
+                async () => {
+                    const res = await API.post('reservations.php?action=annuler', { id });
+                    if (res.success) {
+                        notify.success(res.message);
+                        loadMyReservations();
+                    } else {
+                        notify.error(res.error);
+                    }
+                }
+            );
+        }
+    </script>
+</body>
+
+</html>

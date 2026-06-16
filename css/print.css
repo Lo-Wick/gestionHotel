@@ -1,0 +1,86 @@
+/* ============================================
+   PRINT STYLES - Styles pour l'impression des factures
+   ============================================ */
+
+@media print {
+
+    /* Hide non-printable elements */
+    .navbar,
+    .footer,
+    .btn,
+    .no-print,
+    .toast-container,
+    .modal-backdrop,
+    .filters-sidebar,
+    .breadcrumb {
+        display: none !important;
+    }
+
+    /* Standardize page */
+    body {
+        background: white !important;
+        color: black !important;
+        font-family: serif;
+        font-size: 12pt;
+    }
+
+    .main-content {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Specific for invoice/reservation details */
+    .invoice {
+        padding: 20px;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .invoice-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        border-bottom: 2px solid #000;
+        padding-bottom: 20px;
+    }
+
+    .invoice-title {
+        font-size: 24pt;
+        font-weight: bold;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+
+    th,
+    td {
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2 !important;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .total-row {
+        text-align: right;
+        font-size: 16pt;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .footer-print {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 10pt;
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+    }
+}

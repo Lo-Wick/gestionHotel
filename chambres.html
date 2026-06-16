@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Chambres | Célestia Hotel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-icon">C</div>
+                <span>CÉLESTIA <b>HOTEL</b></span>
+            </a>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+            <div class="navbar-nav">
+                <a href="index.html">Accueil</a>
+                <a href="chambres.html" class="active">Nos Chambres</a>
+                <a href="reservation.html">Réserver</a>
+                <div class="navbar-actions" id="auth-links"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header class="page-header" style="--header-bg: url('assets/img/hero_rooms.png')">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="index.html">Accueil</a>
+                    <span class="separator">/</span>
+                    <span class="current">Nos Chambres</span>
+                </div>
+                <h1>Nos Chambres & Suites d'Élite</h1>
+                <p>Explorez notre collection exclusive d'espaces raffinés conçus pour votre bien-être absolu.</p>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="chambres-layout">
+                <!-- Sidebar Filters -->
+                <aside class="filters-sidebar">
+                    <form id="filter-form">
+                        <h4>Dates de séjour</h4>
+                        <div class="form-group">
+                            <label class="form-label">Arrivée</label>
+                            <input type="date" name="date_debut" id="filter_checkin" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Départ</label>
+                            <input type="date" name="date_fin" id="filter_checkout" class="form-input">
+                        </div>
+
+            <div class="filter-group">
+                <h4>Type d'hébergement</h4>
+                <div class="form-group">
+                    <select name="type" class="form-select">
+                        <option value="">Tous les types</option>
+                        <option value="Standard">Standard</option>
+                        <option value="Confort">Confort</option>
+                        <option value="Suite">Suite</option>
+                        <option value="Présidentielle">Présidentielle</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Budget (/nuit)</h4>
+                <div class="price-range">
+                    <input type="range" name="prix_max" min="0" max="1000" step="50" value="1000"
+                        id="price-range-input">
+                    <div class="price-labels">
+                        <span>0 €</span>
+                        <span id="price-value-display">1000 €</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Capacité</h4>
+                <div class="form-check">
+                    <input type="radio" name="capacite" value="" checked id="cap-all">
+                    <label for="cap-all">Tous</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" name="capacite" value="1" id="cap-1">
+                    <label for="cap-1">1 personne</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" name="capacite" value="2" id="cap-2">
+                    <label for="cap-2">2 personnes</label>
+                </div>
+            </div>
+
+            <button type="reset" class="btn btn-ghost btn-block"
+                onclick="setTimeout(()=>Filters.loadChambres('rooms-container'), 0)">Réinitialiser</button>
+            </form>
+            </aside>
+
+            <!-- Grid -->
+            <div class="rooms-main">
+                <div class="flex-between mb-6">
+                    <p class="text-secondary"><span id="results-count">...</span> chambres trouvées</p>
+                    <select class="form-select" style="width: auto;" id="tri-select"
+                        onchange="Filters.params.tri = this.value; Filters.loadChambres('rooms-container')">
+                        <option value="numero">Par numéro</option>
+                        <option value="prix_asc">Prix croissant</option>
+                        <option value="prix_desc">Prix décroissant</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-2 gap-8" id="rooms-container">
+                    <!-- Loaded via JS -->
+                    <div class="spinner"></div>
+                </div>
+
+                <div id="pagination" class="pagination"></div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">CÉLESTIA <span>HOTEL</span></div>
+                    <p>Luxe, calme et volupté. L'adresse de référence pour vos séjours d'affaires et de loisirs.</p>
+                </div>
+                <div>
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="chambres.html">Chambres</a></li>
+                        <li><a href="reservation.html">Réservation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Suivez-nous</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
+                <div class="flex gap-6">
+                    <a href="#">Mentions Légales</a>
+                    <a href="#">Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/filters.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Calendar.init('filter_checkin', { minToday: true, linkedWith: 'filter_checkout' });
+            Calendar.init('filter_checkout');
+
+            // Sync price range display
+            const priceInput = document.getElementById('price-range-input');
+            const priceDisplay = document.getElementById('price-value-display');
+            priceInput.addEventListener('input', () => {
+                priceDisplay.textContent = priceInput.value + ' €';
+            });
+
+            // Parse URL search params for initial filtering
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.forEach((value, key) => {
+                Filters.params[key] = value;
+                const field = document.querySelector(`[name="${key}"]`);
+                if (field) field.value = value;
+            });
+
+            Filters.loadChambres('rooms-container');
+            Filters.setupFilters();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Réservations | Célestia Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-brand">CÉLESTIA ADMIN</div>
+            <nav class="admin-sidebar-nav">
+                <a href="index.html"><span class="material-symbols-outlined">analytics</span> Tableau de bord</a>
+                <a href="chambres.html"><span class="material-symbols-outlined">hotel</span> Chambres</a>
+                <a href="reservations.html" class="active"><span class="material-symbols-outlined">calendar_month</span> Réservations</a>
+                <a href="clients.html"><span class="material-symbols-outlined">group</span> Clients</a>
+                <a href="paiements.html"><span class="material-symbols-outlined">payments</span> Paiements</a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-page-header">
+                <h1>Réservations</h1>
+                <p>Suivi et gestion des séjours clients.</p>
+            </header>
+
+            <div class="table-wrapper">
+                <div class="table-header">
+                    <div class="flex gap-4">
+                        <select class="form-select" style="width: 180px;" id="status-filter">
+                            <option value="">Tous les statuts</option>
+                            <option value="En attente">En attente</option>
+                            <option value="Confirmée">Confirmée</option>
+                            <option value="Terminée">Terminée</option>
+                            <option value="Annulée">Annulée</option>
+                        </select>
+                    </div>
+                </div>
+                <table id="reservations-table">
+                    <thead>
+                        <tr>
+                            <th>Réf</th>
+                            <th>Client</th>
+                            <th>Chambre</th>
+                            <th>Dates</th>
+                            <th>Total</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loaded via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/notifications.js"></script>
+    <script src="../js/modal.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!await Admin.requireAuth()) return;
+            loadReservations();
+
+            document.getElementById('status-filter').addEventListener('change', (e) => loadReservations(e.target.value));
+        });
+
+        async function loadReservations(status = '') {
+            const params = { resource: 'reservations', action: 'list' };
+            if (status) params.statut = status;
+
+            const res = await API.get('admin/index.php', params);
+            const tbody = document.querySelector('#reservations-table tbody');
+            if (!res.success) {
+                notify.error(res.error);
+                return;
+            }
+            if (res.data.reservations.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center p-6">Aucune réservation trouvée.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = res.data.reservations.map(r => `
+                    <tr>
+                        <td><b>RES-${r.id_reservation}</b></td>
+                        <td>${r.prenom} ${r.nom}</td>
+                        <td>n°${r.numero} (${r.type})</td>
+                        <td><small>${new Date(r.date_debut).toLocaleDateString()} (${r.heure_arrivee ? r.heure_arrivee.substring(0, 5) : '15:00'})<br>${new Date(r.date_fin).toLocaleDateString()} (${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'})</small></td>
+                        <td>${r.montant_total} €</td>
+                        <td>
+                            <select class="form-select btn-sm" style="width:auto;" onchange="updateStatus(${r.id_reservation}, this.value)">
+                                <option value="En attente" ${r.statut === 'En attente' ? 'selected' : ''}>En attente</option>
+                                <option value="Confirmée" ${r.statut === 'Confirmée' ? 'selected' : ''}>Confirmée</option>
+                                <option value="Terminée" ${r.statut === 'Terminée' ? 'selected' : ''}>Terminée</option>
+                                <option value="Annulée" ${r.statut === 'Annulée' ? 'selected' : ''}>Annulée</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-ghost" onclick="viewDetails(${r.id_reservation})">👁️</button>
+                        </td>
+                    </tr>
+                `).join('');
+        }
+
+        async function updateStatus(id, status) {
+            const res = await API.post('admin/index.php?resource=reservations&action=updateStatut', { id, statut: status });
+            if (res.success) notify.success(res.message);
+            else notify.error(res.error);
+        }
+
+        async function viewDetails(id) {
+            const res = await API.get('reservations.php', { action: 'detail', id });
+            if (res.success) {
+                const r = res.reservation;
+                modal.open({
+                    title: `Détails Réservation RES-${id}`,
+                    content: `
+                        <div class="grid grid-2 gap-4">
+                            <div>
+                                <b>Client:</b> ${r.prenom} ${r.nom}<br>
+                                <b>Email:</b> ${r.email}<br>
+                                <b>Tel:</b> ${r.telephone}
+                            </div>
+                            <div>
+                                <b>Arrivée:</b> ${new Date(r.date_debut).toLocaleDateString()} à ${r.heure_arrivee ? r.heure_arrivee.substring(0, 5) : '15:00'}<br>
+                                <b>Départ:</b> ${new Date(r.date_fin).toLocaleDateString()} à ${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'}<br>
+                                <b>Total:</b> ${r.montant_total} €
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <b>Remarques:</b><br>
+                            <p class="text-xs text-secondary">${r.remarques || 'Aucune remarque'}</p>
+                        </div>
+                    `,
+                    footer: `<button class="btn btn-primary" onclick="modal.close()">Fermer</button>`
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

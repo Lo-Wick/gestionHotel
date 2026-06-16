@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription | Célestia Hotel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-icon">C</div>
+                <span>CÉLESTIA <b>HOTEL</b></span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="auth-container">
+        <div class="auth-card slide-up" style="max-width: 550px;">
+            <div class="auth-logo">CÉLESTIA <span>HOTEL</span></div>
+            <h1>Créer un compte</h1>
+            <p class="auth-subtitle">Rejoignez-nous pour bénéficier de nos meilleures offres.</p>
+
+            <form id="register-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Prénom</label>
+                        <input type="text" name="prenom" class="form-input" placeholder="Jean" data-validate="required"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nom</label>
+                        <input type="text" name="nom" class="form-input" placeholder="Dupont" data-validate="required"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Adresse Email</label>
+                    <input type="email" name="email" class="form-input" placeholder="jean.dupont@mail.com"
+                        data-validate="required|email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Téléphone</label>
+                    <input type="tel" name="telephone" class="form-input" placeholder="+33 6 12 34 56 78"
+                        data-validate="required|phone" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Mot de passe</label>
+                        <div style="position:relative;">
+                            <input type="password" name="password" id="reg-password" class="form-input"
+                                placeholder="••••••••" data-validate="required|password" required>
+                            <button type="button" class="btn-toggle-password"
+                                onclick="App.togglePassword('reg-password', this)">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirmation</label>
+                        <div style="position:relative;">
+                            <input type="password" name="password_confirm" id="reg-password-confirm" class="form-input"
+                                placeholder="••••••••" data-validate="required|password_confirm" required>
+                            <button type="button" class="btn-toggle-password"
+                                onclick="App.togglePassword('reg-password-confirm', this)">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-xs text-secondary mb-6">Le mot de passe doit contenir 8 caractères minimum, une majuscule, une minuscule, un chiffre et un caractère spécial (!@#$...).</p>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg">Créer mon compte</button>
+            </form>
+
+            <div class="auth-footer">
+                Déjà un compte ? <a href="login.html">Se connecter</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">CÉLESTIA <span>HOTEL</span></div>
+                    <p>Luxe, calme et volupté. L'adresse de référence pour vos séjours d'affaires et de loisirs.</p>
+                </div>
+                <div>
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="chambres.html">Chambres</a></li>
+                        <li><a href="reservation.html">Réservation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Suivez-nous</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
+                <div class="flex gap-6">
+                    <a href="#">Mentions Légales</a>
+                    <a href="#">Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            validation.setupForm('register-form', async (data) => {
+                const response = await API.post('auth.php?action=register', data);
+                if (response.success) {
+                    notify.success(response.message);
+                    setTimeout(() => { window.location.href = 'profil.html'; }, 1500);
+                } else {
+                    notify.error(response.error);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

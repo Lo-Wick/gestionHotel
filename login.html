@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion | Célestia Hotel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-icon">C</div>
+                <span>CÉLESTIA <b>HOTEL</b></span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="auth-container">
+        <div class="auth-card slide-up">
+            <div class="auth-logo">CÉLESTIA <span>HOTEL</span></div>
+            <h1>Bon retour parmi nous</h1>
+            <p class="auth-subtitle">Connectez-vous pour gérer vos réservations.</p>
+            <p id="redirect-hint" class="text-sm text-secondary mb-4" style="display:none;">Vous devez être connecté pour accéder à cette page.</p>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label class="form-label">Adresse Email</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"><span class="material-symbols-outlined">mail</span></span>
+                        <input type="email" name="email" class="form-input" placeholder="exemple@mail.com"
+                            data-validate="required|email" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="flex-between mb-2">
+                        <label class="form-label mb-0">Mot de passe</label>
+                        <a href="#" onclick="showForgotModal(); return false;" class="text-xs">Mot de passe oublié ?</a>
+                    </div>
+                    <div class="input-with-icon" style="position:relative;">
+                        <span class="input-icon"><span class="material-symbols-outlined">lock</span></span>
+                        <input type="password" name="password" id="login-password" class="form-input"
+                            placeholder="••••••••" data-validate="required" required>
+                        <button type="button" class="btn-toggle-password"
+                            onclick="App.togglePassword('login-password', this)">
+                            <span class="material-symbols-outlined">visibility</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-check">
+                        <input type="checkbox" name="remember">
+                        <span>Se souvenir de moi</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg">Se connecter</button>
+            </form>
+
+            <div class="auth-divider">OU</div>
+
+            <div class="auth-footer">
+                Pas encore de compte ? <a href="register.html">Créer un compte</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">CÉLESTIA <span>HOTEL</span></div>
+                    <p>Luxe, calme et volupté. L'adresse de référence pour vos séjours d'affaires et de loisirs.</p>
+                </div>
+                <div>
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="chambres.html">Chambres</a></li>
+                        <li><a href="reservation.html">Réservation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Suivez-nous</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
+                <div class="flex gap-6">
+                    <a href="#">Mentions Légales</a>
+                    <a href="#">Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function showForgotModal() {
+            modal.open({
+                title: 'Mot de passe oublié',
+                content: `
+                    <p class="mb-4">Entrez votre adresse email pour recevoir un nouveau mot de passe.</p>
+                    <input type="email" id="forgot-email" class="form-input" placeholder="votre@email.com">
+                `,
+                footer: `
+                    <button class="btn btn-primary" onclick="submitForgot()">Envoyer</button>
+                `
+            });
+        }
+
+        async function submitForgot() {
+            const email = document.getElementById('forgot-email').value;
+            if (!email) return notify.warning('Veuillez entrer une adresse email');
+
+            notify.info('Envoi en cours...');
+            const res = await API.post('auth.php?action=forgot', { email });
+            if (res.success) {
+                notify.success(res.message);
+                modal.close();
+            } else {
+                notify.error(res.error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const redirect = new URLSearchParams(window.location.search).get('redirect');
+            if (redirect) {
+                const hint = document.getElementById('redirect-hint');
+                if (hint) hint.style.display = 'block';
+            }
+
+            validation.setupForm('login-form', async (data) => {
+                const response = await API.post('auth.php?action=login', data);
+                if (response.success) {
+                    notify.success(response.message);
+                    setTimeout(() => {
+                        if (redirect) {
+                            window.location.href = redirect;
+                        } else {
+                            window.location.href = response.user.role === 'admin' ? 'admin/index.html' : 'profil.html';
+                        }
+                    }, 1000);
+                } else {
+                    notify.error(response.error);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

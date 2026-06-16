@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réserver | Célestia Hotel</title>
+    <meta name="description" content="Finalisez votre réservation au Célestia Hotel. Choisissez vos dates, horaires et options pour un séjour d'exception.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/reservation-page.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <nav class="navbar" id="main-navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-icon">C</div>
+                <span>CÉLESTIA <b>HOTEL</b></span>
+            </a>
+            <div class="hamburger" id="hamburger-btn" role="button" aria-label="Menu" tabindex="0">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="navbar-nav" id="main-nav">
+                <a href="index.html">Accueil</a>
+                <a href="chambres.html">Nos Chambres</a>
+                <a href="reservation.html" class="active">Réserver</a>
+                <div class="navbar-actions" id="auth-links"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+
+        <!-- Page Header -->
+        <header class="page-header" style="--header-bg: url('assets/img/hero_reservation.png')">
+            <div class="container">
+                <nav class="breadcrumb" aria-label="Fil d'Ariane">
+                    <a href="index.html">Accueil</a>
+                    <span class="separator">/</span>
+                    <a href="chambres.html">Nos Chambres</a>
+                    <span class="separator">/</span>
+                    <span class="current">Réservation</span>
+                </nav>
+                <h1>Finalisez votre séjour de rêve</h1>
+                <p>Complétez les détails ci-dessous pour orchestrer votre arrivée exclusive au Célestia.</p>
+            </div>
+        </header>
+
+        <div class="container section">
+
+            <!-- Stepper -->
+            <div class="stepper" role="navigation" aria-label="Étapes de réservation">
+                <div class="stepper-step completed" aria-label="Étape 1 terminée">
+                    <div class="stepper-number">
+                        <span class="material-symbols-outlined" style="font-size:1.1rem">check</span>
+                    </div>
+                    <div class="stepper-label">Choix chambre</div>
+                </div>
+                <div class="stepper-step active" aria-current="step">
+                    <div class="stepper-number">2</div>
+                    <div class="stepper-label">Détails séjour</div>
+                </div>
+                <div class="stepper-step">
+                    <div class="stepper-number">3</div>
+                    <div class="stepper-label">Paiement</div>
+                </div>
+            </div>
+
+            <!-- Layout 2 colonnes -->
+            <div class="reservation-layout">
+
+                <!-- ======= FORMULAIRE (gauche) ======= -->
+                <div class="booking-form-card slide-up">
+                    <!-- En-tête du formulaire -->
+                    <div class="booking-form-header">
+                        <span class="material-symbols-outlined">edit_calendar</span>
+                        <div>
+                            <h2>Détails de votre séjour</h2>
+                            <p>Tous les champs marqués * sont obligatoires</p>
+                        </div>
+                    </div>
+
+                    <div class="booking-form-body">
+                        <form id="booking-form" novalidate>
+                            <input type="hidden" name="id_chambre" id="input_room_id">
+
+                            <!-- Section 1 : Dates -->
+                            <div class="form-section">
+                                <div class="form-section-title">
+                                    <span class="form-section-num">1</span>
+                                    <span class="section-label">Vos dates de séjour</span>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="date_debut">
+                                            Date d'arrivée <span class="required">*</span>
+                                        </label>
+                                        <div class="date-input-wrap">
+                                            <span class="material-symbols-outlined date-icon">flight_land</span>
+                                            <input type="date" name="date_debut" id="date_debut"
+                                                class="form-input" data-validate="required" required
+                                                aria-label="Date d'arrivée">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="date_fin">
+                                            Date de départ <span class="required">*</span>
+                                        </label>
+                                        <div class="date-input-wrap">
+                                            <span class="material-symbols-outlined date-icon">flight_takeoff</span>
+                                            <input type="date" name="date_fin" id="date_fin"
+                                                class="form-input" data-validate="required" required
+                                                aria-label="Date de départ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 2 : Horaires -->
+                            <div class="form-section">
+                                <div class="form-section-title">
+                                    <span class="form-section-num">2</span>
+                                    <span class="section-label">Horaires d'arrivée &amp; départ</span>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="heure_arrivee">
+                                            Heure d'arrivée estimée <span class="required">*</span>
+                                        </label>
+                                        <div class="select-wrap">
+                                            <span class="material-symbols-outlined select-icon">schedule</span>
+                                            <select name="heure_arrivee" id="heure_arrivee" class="form-select" required>
+                                                <option value="12:00:00">12:00 — Arrivée anticipée (VIP)</option>
+                                                <option value="13:00:00">13:00 — Arrivée anticipée (VIP)</option>
+                                                <option value="14:00:00">14:00</option>
+                                                <option value="15:00:00" selected>15:00 — Standard</option>
+                                                <option value="16:00:00">16:00</option>
+                                                <option value="17:00:00">17:00</option>
+                                                <option value="18:00:00">18:00</option>
+                                                <option value="19:00:00">19:00</option>
+                                                <option value="20:00:00">20:00 — Arrivée tardive</option>
+                                                <option value="21:00:00">21:00 — Arrivée tardive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="heure_depart">
+                                            Heure de départ estimée <span class="required">*</span>
+                                        </label>
+                                        <div class="select-wrap">
+                                            <span class="material-symbols-outlined select-icon">schedule</span>
+                                            <select name="heure_depart" id="heure_depart" class="form-select" required>
+                                                <option value="08:00:00">08:00</option>
+                                                <option value="09:00:00">09:00</option>
+                                                <option value="10:00:00">10:00</option>
+                                                <option value="11:00:00" selected>11:00 — Standard</option>
+                                                <option value="12:00:00">12:00 — Départ tardif</option>
+                                                <option value="13:00:00">13:00 — Départ tardif (VIP)</option>
+                                                <option value="14:00:00">14:00 — Départ tardif (VIP)</option>
+                                                <option value="15:00:00">15:00 — Départ tardif (VIP)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 3 : Voyageurs -->
+                            <div class="form-section">
+                                <div class="form-section-title">
+                                    <span class="form-section-num">3</span>
+                                    <span class="section-label">Composition du groupe</span>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="nombre_adultes">
+                                            Adultes <span class="required">*</span>
+                                        </label>
+                                        <div class="select-wrap">
+                                            <span class="material-symbols-outlined select-icon">person</span>
+                                            <select name="nombre_adultes" id="nombre_adultes" class="form-select">
+                                                <option value="1">1 Adulte</option>
+                                                <option value="2" selected>2 Adultes</option>
+                                                <option value="3">3 Adultes</option>
+                                                <option value="4">4 Adultes</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="nombre_enfants">Enfants</label>
+                                        <div class="select-wrap">
+                                            <span class="material-symbols-outlined select-icon">child_care</span>
+                                            <select name="nombre_enfants" id="nombre_enfants" class="form-select">
+                                                <option value="0" selected>Aucun enfant</option>
+                                                <option value="1">1 Enfant</option>
+                                                <option value="2">2 Enfants</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 4 : Demandes spéciales -->
+                            <div class="form-section" style="margin-bottom:0;">
+                                <div class="form-section-title">
+                                    <span class="form-section-num">4</span>
+                                    <span class="section-label">Demandes spéciales</span>
+                                </div>
+
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label class="form-label" for="remarques">Remarques ou demandes particulières</label>
+                                    <textarea name="remarques" id="remarques" class="form-textarea"
+                                        placeholder="Ex: Arrivée tardive, lit bébé, allergie alimentaire, étage élevé, occasion spéciale…"
+                                        aria-describedby="remarques-hint"></textarea>
+                                    <span class="form-hint" id="remarques-hint">
+                                        Nous ferons notre possible pour répondre à vos demandes, sous réserve de disponibilité.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Footer formulaire -->
+                            <div class="booking-form-footer">
+                                <a href="chambres.html" class="btn btn-ghost">
+                                    <span class="material-symbols-outlined">arrow_back</span>
+                                    Retour aux chambres
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-lg" id="submit-booking-btn">
+                                    <span class="material-symbols-outlined">hotel</span>
+                                    Réserver maintenant
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ======= SIDEBAR (droite) ======= -->
+                <div class="summary-sticky">
+
+                    <!-- Aperçu chambre -->
+                    <div id="room-preview-card" class="room-preview-card slide-up" style="animation-delay:.1s;">
+                        <div style="height:200px;background:linear-gradient(135deg,var(--color-gray-100),var(--color-beige));display:flex;align-items:center;justify-content:center;">
+                            <div class="spinner"></div>
+                        </div>
+                        <div class="room-preview-body">
+                            <div style="height:14px;background:var(--color-gray-100);border-radius:4px;width:40%;margin-bottom:10px;" class="skeleton"></div>
+                            <div style="height:22px;background:var(--color-gray-100);border-radius:4px;width:70%;margin-bottom:14px;" class="skeleton"></div>
+                            <div style="height:14px;background:var(--color-gray-100);border-radius:4px;width:55%;" class="skeleton"></div>
+                        </div>
+                    </div>
+
+                    <!-- Récapitulatif financier -->
+                    <div class="financial-summary-card slide-up" style="animation-delay:.2s;">
+                        <div class="financial-summary-header">
+                            <span class="material-symbols-outlined">receipt_long</span>
+                            <h3>Récapitulatif financier</h3>
+                        </div>
+                        <div class="financial-summary-body">
+
+                            <!-- Ligne nuits calculées -->
+                            <div class="fin-nights-row" id="nights-info-row" style="display:none;">
+                                <span class="nights-info" id="nights-count-display">— nuits</span>
+                                <span class="nights-calc" id="nights-dates-display">Sélectionnez vos dates</span>
+                            </div>
+
+                            <div class="fin-row">
+                                <span class="fin-label">
+                                    <span class="material-symbols-outlined">king_bed</span>
+                                    Prix par nuit
+                                </span>
+                                <span class="fin-value" id="price-per-night">—</span>
+                            </div>
+                            <div class="fin-row">
+                                <span class="fin-label">
+                                    <span class="material-symbols-outlined">receipt</span>
+                                    TVA (20%)
+                                </span>
+                                <span class="fin-value free">Incluse</span>
+                            </div>
+                            <div class="fin-row">
+                                <span class="fin-label">
+                                    <span class="material-symbols-outlined">local_parking</span>
+                                    Petit-déjeuner
+                                </span>
+                                <span class="fin-value free">Offert</span>
+                            </div>
+                            <div class="fin-row">
+                                <span class="fin-label">
+                                    <span class="material-symbols-outlined">wifi</span>
+                                    Wi-Fi
+                                </span>
+                                <span class="fin-value free">Gratuit</span>
+                            </div>
+
+                            <div class="fin-total-block">
+                                <span class="fin-total-label">Total estimé</span>
+                                <span class="fin-total-price" id="total-price-display">—</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Garanties -->
+                    <div class="booking-guarantees slide-up" style="animation-delay:.3s;">
+                        <div class="guarantee-item">
+                            <span class="material-symbols-outlined">verified</span>
+                            Annulation gratuite jusqu'à 48h avant l'arrivée
+                        </div>
+                        <div class="guarantee-item">
+                            <span class="material-symbols-outlined">price_check</span>
+                            Meilleur tarif garanti — sans frais cachés
+                        </div>
+                        <div class="guarantee-item">
+                            <span class="material-symbols-outlined">shield</span>
+                            Paiement sécurisé SSL 256 bits
+                        </div>
+                        <div class="guarantee-item">
+                            <span class="material-symbols-outlined">support_agent</span>
+                            Conciergerie disponible 24h/24
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /summary-sticky -->
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">CÉLESTIA <span>HOTEL</span></div>
+                    <p>Luxe, calme et volupté. L'adresse de référence pour vos séjours d'affaires et de loisirs.</p>
+                </div>
+                <div>
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="chambres.html">Chambres</a></li>
+                        <li><a href="reservation.html">Réservation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Suivez-nous</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
+                <div class="flex gap-6">
+                    <a href="#">Mentions Légales</a>
+                    <a href="#">Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/reservations.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const roomId    = urlParams.get('id');
+            const start     = urlParams.get('date_debut');
+            const end       = urlParams.get('date_fin');
+
+            if (!roomId) {
+                notify.warning('Veuillez sélectionner une chambre.');
+                window.location.href = 'chambres.html';
+                return;
+            }
+
+            const auth = await API.get('auth.php', { action: 'check' });
+            if (!auth.logged_in) {
+                notify.warning('Connectez-vous pour effectuer une réservation.');
+                setTimeout(() => {
+                    window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.href);
+                }, 1500);
+                return;
+            }
+
+            document.getElementById('input_room_id').value = roomId;
+            if (start) document.getElementById('date_debut').value = start;
+            if (end)   document.getElementById('date_fin').value   = end;
+
+            Calendar.init('date_debut', { minToday: true, linkedWith: 'date_fin' });
+            Calendar.init('date_fin');
+
+            // Mise à jour du calcul de nuits à chaque changement de date
+            const dateDebut = document.getElementById('date_debut');
+            const dateFin   = document.getElementById('date_fin');
+            [dateDebut, dateFin].forEach(el => el.addEventListener('change', updateNightsDisplay));
+            updateNightsDisplay();
+
+            // Chargement des infos chambre
+            const response = await API.get('chambres.php', { action: 'detail', id: roomId });
+            if (response.success) {
+                Booking.currentRoom = response.chambre;
+                const r = response.chambre;
+
+                document.getElementById('price-per-night').textContent =
+                    parseFloat(r.prix_nuit).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+
+                // Remplacer le skeleton par la vraie carte chambre
+                document.getElementById('room-preview-card').innerHTML = `
+                    <div style="overflow:hidden;border-radius:inherit;">
+                        <div style="overflow:hidden;height:200px;">
+                            <img src="${r.image_url || 'assets/img/room_standard.png'}"
+                                 class="room-preview-img"
+                                 alt="${r.type} — chambre n°${r.numero}"
+                                 onerror="this.src='assets/img/room_standard.png'">
+                        </div>
+                        <div class="room-preview-body">
+                            <div class="room-preview-type">
+                                <span class="material-symbols-outlined" style="font-size:.9rem">hotel_class</span>
+                                ${r.type}
+                            </div>
+                            <div class="room-preview-name">Chambre n°${r.numero}</div>
+                            <div class="room-preview-meta">
+                                <div class="room-preview-meta-item">
+                                    <span class="material-symbols-outlined">group</span>
+                                    Capacité : ${r.capacite} personne${r.capacite > 1 ? 's' : ''}
+                                </div>
+                                <div class="room-preview-meta-item">
+                                    <span class="material-symbols-outlined">sell</span>
+                                    ${parseFloat(r.prix_nuit).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })} / nuit
+                                </div>
+                                <div class="room-preview-meta-item">
+                                    <span class="material-symbols-outlined">${r.disponibilite == 1 ? 'check_circle' : 'cancel'}</span>
+                                    <span style="color:${r.disponibilite == 1 ? 'var(--color-success)' : 'var(--color-error)'}; font-weight:600;">
+                                        ${r.disponibilite == 1 ? 'Disponible' : 'Indisponible'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+
+                Booking.updatePricing();
+                updateNightsDisplay();
+            }
+
+            Booking.setupBookingForm();
+        });
+
+        /* Affichage du nombre de nuits calculé */
+        function updateNightsDisplay() {
+            const d1 = document.getElementById('date_debut')?.value;
+            const d2 = document.getElementById('date_fin')?.value;
+            const row = document.getElementById('nights-info-row');
+            const countEl = document.getElementById('nights-count-display');
+            const datesEl = document.getElementById('nights-dates-display');
+
+            if (d1 && d2) {
+                const start  = new Date(d1);
+                const end    = new Date(d2);
+                const nights = Math.ceil((end - start) / 86400000);
+
+                if (nights > 0 && row) {
+                    row.style.display = 'flex';
+                    countEl.textContent = `${nights} nuit${nights > 1 ? 's' : ''}`;
+                    datesEl.textContent = `${start.toLocaleDateString('fr-FR', {day:'numeric',month:'short'})} → ${end.toLocaleDateString('fr-FR', {day:'numeric',month:'short'})}`;
+                } else if (row) {
+                    row.style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
