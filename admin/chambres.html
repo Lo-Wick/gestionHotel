@@ -111,8 +111,17 @@
                             <textarea name="description" class="form-textarea">${room?.description || ''}</textarea>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Image URL</label>
-                            <input type="text" name="image_url" class="form-input" value="${room?.image_url || ''}">
+                            <label class="form-label">Image de la chambre</label>
+                            <select name="image_url" class="form-select">
+                                <option value="assets/img/chambre/standard.jpg" ${room?.image_url === 'assets/img/chambre/standard.jpg' ? 'selected' : ''}>Standard</option>
+                                <option value="assets/img/chambre/standard (2).jpg" ${room?.image_url === 'assets/img/chambre/standard (2).jpg' ? 'selected' : ''}>Standard (2)</option>
+                                <option value="assets/img/chambre/confort.jpg" ${room?.image_url === 'assets/img/chambre/confort.jpg' ? 'selected' : ''}>Confort</option>
+                                <option value="assets/img/chambre/double confort.jpg" ${room?.image_url === 'assets/img/chambre/double confort.jpg' ? 'selected' : ''}>Double Confort</option>
+                                <option value="assets/img/chambre/suite.jpg" ${room?.image_url === 'assets/img/chambre/suite.jpg' ? 'selected' : ''}>Suite</option>
+                                <option value="assets/img/chambre/suite2.jpg" ${room?.image_url === 'assets/img/chambre/suite2.jpg' ? 'selected' : ''}>Suite (2)</option>
+                                <option value="assets/img/chambre/presidentielle.jpg" ${room?.image_url === 'assets/img/chambre/presidentielle.jpg' ? 'selected' : ''}>Présidentielle</option>
+                                <option value="assets/img/chambre/presidentielle3.jpg" ${room?.image_url === 'assets/img/chambre/presidentielle3.jpg' ? 'selected' : ''}>Présidentielle (3)</option>
+                            </select>
                         </div>
                     </form>
                 `,

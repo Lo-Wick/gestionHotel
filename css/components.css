@@ -1700,7 +1700,9 @@ tbody tr:last-child td {
 
 /* ===== Homepage — About, Stats, Testimonials ===== */
 .stats-bar {
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    /* background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));*/
+    background: linear-gradient(135deg, var(--color-gray-900) -50%, var(--color-primary-dark) 100%);
+
     padding: var(--space-10) 0;
 }
 
