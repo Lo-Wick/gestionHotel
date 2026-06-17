@@ -44,9 +44,21 @@
         </header>
 
         <div class="container">
+            <!-- Mobile Filters Toggle -->
+            <button class="btn btn-secondary btn-block filters-toggle mb-6" onclick="Filters.toggleMobileFilters()">
+                <span class="material-symbols-outlined">tune</span>
+                Filtrer les chambres
+            </button>
+
             <div class="chambres-layout">
                 <!-- Sidebar Filters -->
                 <aside class="filters-sidebar">
+                    <div class="filters-sidebar-header">
+                        <h4>Filtres</h4>
+                        <button class="filters-close" onclick="Filters.toggleMobileFilters()">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
                     <form id="filter-form">
                         <h4>Dates de séjour</h4>
                         <div class="form-group">
@@ -74,11 +86,11 @@
                         <div class="filter-group">
                             <h4>Budget (/nuit)</h4>
                             <div class="price-range">
-                                <input type="range" name="prix_max" min="0" max="1000" step="50" value="1000"
+                                <input type="range" name="prix_max" min="0" max="1000000" step="50" value="1000000"
                                     id="price-range-input">
                                 <div class="price-labels">
                                     <span>0 Ariary</span>
-                                    <span id="price-value-display">1000 Ariary</span>
+                                    <span id="price-value-display">1000000 Ariary</span>
                                 </div>
                             </div>
                         </div>
@@ -99,8 +111,8 @@
                             </div>
                         </div>
 
-                        <button type="reset" class="btn btn-ghost btn-block"
-                            onclick="setTimeout(()=>Filters.loadChambres('rooms-container'), 0)">Réinitialiser</button>
+                        <button type="button" class="btn btn-ghost btn-block"
+                            onclick="Filters.resetFilters()">Réinitialiser</button>
                     </form>
                 </aside>
 

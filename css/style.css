@@ -776,7 +776,29 @@ p {
     border: 1px solid var(--border-color);
 }
 
-/* ===== BADGE ===== */
+/* Filters Sidebar Mobile Header */
+.filters-sidebar-header {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-6);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--space-4);
+    background: var(--bg-card);
+}
+
+.filters-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-gray-600);
+}
+
+@media (max-width: 768px) {
+    .filters-sidebar-header {
+        display: flex;
+    }
+}
 .badge {
     display: inline-flex;
     align-items: center;

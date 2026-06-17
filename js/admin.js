@@ -10,7 +10,29 @@ const Admin = {
             window.location.href = '../login.html?redirect=' + encodeURIComponent(window.location.pathname);
             return false;
         }
+        this.initAdminMobile();
         return true;
+    },
+
+    initAdminMobile() {
+        // Create mobile header if it doesn't exist
+        if (!document.querySelector('.admin-mobile-header') && document.querySelector('.admin-layout')) {
+            const header = document.createElement('div');
+            header.className = 'admin-mobile-header';
+            header.innerHTML = `
+                <div class="admin-sidebar-brand" style="border:none;margin:0;padding:0;font-size:1rem;">CÉLESTIA ADMIN</div>
+                <button class="hamburger active" id="admin-hamburger" onclick="Admin.toggleSidebar()">
+                    <span></span><span></span><span></span>
+                </button>
+            `;
+            document.querySelector('.admin-layout').prepend(header);
+        }
+    },
+
+    toggleSidebar() {
+        const sidebar = document.querySelector('.admin-sidebar');
+        sidebar?.classList.toggle('mobile-open');
+        document.getElementById('admin-hamburger')?.classList.toggle('active');
     },
 
     async loadStats() {

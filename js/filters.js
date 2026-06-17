@@ -93,12 +93,24 @@ const Filters = {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     },
 
+    resetFilters() {
+        this.params = {
+            page: 1,
+            limit: 8,
+            tri: 'numero'
+        };
+        const form = document.getElementById('filter-form');
+        if (form) form.reset();
+        const priceDisplay = document.getElementById('price-value-display');
+        if (priceDisplay) priceDisplay.textContent = '1000000 Ariary';
+        this.loadChambres('rooms-container');
+    },
+
     setupFilters() {
         const form = document.getElementById('filter-form');
         if (!form) return;
 
-        let debounceTimer;
-        form.addEventListener('input', () => {
+        const handleInput = () => {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
                 const formData = new FormData(form);
@@ -109,7 +121,17 @@ const Filters = {
                 this.params.page = 1;
                 this.loadChambres('rooms-container');
             }, 400);
-        });
+        };
+
+        let debounceTimer;
+        form.addEventListener('input', handleInput);
+        form.addEventListener('change', handleInput);
+    },
+
+    toggleMobileFilters() {
+        const sidebar = document.querySelector('.filters-sidebar');
+        sidebar?.classList.toggle('mobile-open');
+        document.body.classList.toggle('overflow-hidden');
     }
 };
 
