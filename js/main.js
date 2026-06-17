@@ -95,7 +95,7 @@ const App = {
             localStorage.setItem('theme', theme);
             const btn = document.getElementById('dark-mode-toggle-btn');
             if (btn) {
-                btn.textContent = theme === 'dark' ? '☀️ Mode Clair' : '🌙 Mode Sombre';
+                btn.textContent = theme === 'dark' ? 'Pssez en mode Clair' : 'Passez en mode Sombre';
                 btn.setAttribute('aria-label', theme === 'dark' ? 'Activer le mode clair' : 'Activer le mode sombre');
             }
         };
@@ -114,7 +114,7 @@ const App = {
             btn.className = 'btn btn-ghost btn-sm';
             btn.type = 'button';
             btn.setAttribute('aria-label', currentTheme === 'dark' ? 'Activer le mode clair' : 'Activer le mode sombre');
-            btn.textContent = currentTheme === 'dark' ? '☀️ Mode Clair' : '🌙 Mode Sombre';
+            btn.textContent = currentTheme === 'dark' ? ' Passez en mode Clair' : 'Passez en mode Sombre';
             btn.addEventListener('click', () => {
                 const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 applyTheme(next);
@@ -124,7 +124,7 @@ const App = {
             if (navbarContainer) navbarContainer.appendChild(btn);
         } else if (document.getElementById('dark-mode-toggle-btn')) {
             const existingBtn = document.getElementById('dark-mode-toggle-btn');
-            existingBtn.textContent = currentTheme === 'dark' ? '☀️ Mode Clair' : '🌙 Mode Sombre';
+            existingBtn.textContent = currentTheme === 'dark' ? 'Passez en mode Clair' : 'Passez en mode Sombre';
             existingBtn.addEventListener('click', () => {
                 const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 applyTheme(next);

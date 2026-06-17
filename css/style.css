@@ -486,6 +486,7 @@ p {
     border-radius: var(--radius-lg);
     padding: var(--space-6);
     border: 1px solid rgba(255, 255, 255, 0.15);
+    width: 120%;
 }
 
 .hero-search .search-grid {
