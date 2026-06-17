@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nos Chambres | Célestia Hotel</title>
+    <title>Nos Chambres | Diamond Hotel</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/responsive.css">
@@ -17,8 +17,8 @@
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="navbar-brand">
-                <div class="brand-icon">C</div>
-                <span>CÉLESTIA <b>HOTEL</b></span>
+                <div class="brand-icon">D</div>
+                <span>DIAMOND <b>HOTEL</b></span>
             </a>
             <div class="hamburger"><span></span><span></span><span></span></div>
             <div class="navbar-nav">
@@ -58,72 +58,72 @@
                             <input type="date" name="date_fin" id="filter_checkout" class="form-input">
                         </div>
 
-            <div class="filter-group">
-                <h4>Type d'hébergement</h4>
-                <div class="form-group">
-                    <select name="type" class="form-select">
-                        <option value="">Tous les types</option>
-                        <option value="Standard">Standard</option>
-                        <option value="Confort">Confort</option>
-                        <option value="Suite">Suite</option>
-                        <option value="Présidentielle">Présidentielle</option>
-                    </select>
-                </div>
-            </div>
+                        <div class="filter-group">
+                            <h4>Type d'hébergement</h4>
+                            <div class="form-group">
+                                <select name="type" class="form-select">
+                                    <option value="">Tous les types</option>
+                                    <option value="Standard">Standard</option>
+                                    <option value="Confort">Confort</option>
+                                    <option value="Suite">Suite</option>
+                                    <option value="Présidentielle">Présidentielle</option>
+                                </select>
+                            </div>
+                        </div>
 
-            <div class="filter-group">
-                <h4>Budget (/nuit)</h4>
-                <div class="price-range">
-                    <input type="range" name="prix_max" min="0" max="1000" step="50" value="1000"
-                        id="price-range-input">
-                    <div class="price-labels">
-                        <span>0 €</span>
-                        <span id="price-value-display">1000 €</span>
+                        <div class="filter-group">
+                            <h4>Budget (/nuit)</h4>
+                            <div class="price-range">
+                                <input type="range" name="prix_max" min="0" max="1000" step="50" value="1000"
+                                    id="price-range-input">
+                                <div class="price-labels">
+                                    <span>0 Ariary</span>
+                                    <span id="price-value-display">1000 Ariary</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h4>Capacité</h4>
+                            <div class="form-check">
+                                <input type="radio" name="capacite" value="" checked id="cap-all">
+                                <label for="cap-all">Tous</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" name="capacite" value="1" id="cap-1">
+                                <label for="cap-1">1 personne</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" name="capacite" value="2" id="cap-2">
+                                <label for="cap-2">2 personnes</label>
+                            </div>
+                        </div>
+
+                        <button type="reset" class="btn btn-ghost btn-block"
+                            onclick="setTimeout(()=>Filters.loadChambres('rooms-container'), 0)">Réinitialiser</button>
+                    </form>
+                </aside>
+
+                <!-- Grid -->
+                <div class="rooms-main">
+                    <div class="flex-between mb-6">
+                        <p class="text-secondary"><span id="results-count">...</span> chambres trouvées</p>
+                        <select class="form-select" style="width: auto;" id="tri-select"
+                            onchange="Filters.params.tri = this.value; Filters.loadChambres('rooms-container')">
+                            <option value="numero">Par numéro</option>
+                            <option value="prix_asc">Prix croissant</option>
+                            <option value="prix_desc">Prix décroissant</option>
+                        </select>
                     </div>
+
+                    <div class="grid grid-2 gap-8" id="rooms-container">
+                        <!-- Loaded via JS -->
+                        <div class="spinner"></div>
+                    </div>
+
+                    <div id="pagination" class="pagination"></div>
                 </div>
             </div>
-
-            <div class="filter-group">
-                <h4>Capacité</h4>
-                <div class="form-check">
-                    <input type="radio" name="capacite" value="" checked id="cap-all">
-                    <label for="cap-all">Tous</label>
-                </div>
-                <div class="form-check">
-                    <input type="radio" name="capacite" value="1" id="cap-1">
-                    <label for="cap-1">1 personne</label>
-                </div>
-                <div class="form-check">
-                    <input type="radio" name="capacite" value="2" id="cap-2">
-                    <label for="cap-2">2 personnes</label>
-                </div>
-            </div>
-
-            <button type="reset" class="btn btn-ghost btn-block"
-                onclick="setTimeout(()=>Filters.loadChambres('rooms-container'), 0)">Réinitialiser</button>
-            </form>
-            </aside>
-
-            <!-- Grid -->
-            <div class="rooms-main">
-                <div class="flex-between mb-6">
-                    <p class="text-secondary"><span id="results-count">...</span> chambres trouvées</p>
-                    <select class="form-select" style="width: auto;" id="tri-select"
-                        onchange="Filters.params.tri = this.value; Filters.loadChambres('rooms-container')">
-                        <option value="numero">Par numéro</option>
-                        <option value="prix_asc">Prix croissant</option>
-                        <option value="prix_desc">Prix décroissant</option>
-                    </select>
-                </div>
-
-                <div class="grid grid-2 gap-8" id="rooms-container">
-                    <!-- Loaded via JS -->
-                    <div class="spinner"></div>
-                </div>
-
-                <div id="pagination" class="pagination"></div>
-            </div>
-        </div>
         </div>
     </main>
 
@@ -131,7 +131,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <div class="footer-brand">CÉLESTIA <span>HOTEL</span></div>
+                    <div class="footer-brand">DIAMOND <span>HOTEL</span></div>
                     <p>Luxe, calme et volupté. L'adresse de référence pour vos séjours d'affaires et de loisirs.</p>
                 </div>
                 <div>
@@ -145,22 +145,28 @@
                 <div>
                     <h4>Contact</h4>
                     <ul>
-                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
-                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
-                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> Amborovy, Ampazony,
+                                Majunga</a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +261 34 05
+                                607 89</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span
+                                    class="material-symbols-outlined">mail</span> contact@diamond-hotel.com</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4>Suivez-nous</h4>
                     <div class="social-links">
-                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
-                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
-                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
+                        <a href="#" class="social-btn" aria-label="Facebook"><span
+                                class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span
+                                class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span
+                                class="material-symbols-outlined">share</span></a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
+                <p>&copy; 2026 Diamond Hotel. Tous droits réservés.</p>
                 <div class="flex gap-6">
                     <a href="#">Mentions Légales</a>
                     <a href="#">Confidentialité</a>
@@ -183,7 +189,7 @@
             const priceInput = document.getElementById('price-range-input');
             const priceDisplay = document.getElementById('price-value-display');
             priceInput.addEventListener('input', () => {
-                priceDisplay.textContent = priceInput.value + ' €';
+                priceDisplay.textContent = priceInput.value + ' Ariary';
             });
 
             // Parse URL search params for initial filtering

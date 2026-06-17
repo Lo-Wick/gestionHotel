@@ -54,7 +54,7 @@ const Filters = {
                             ${room.disponibilite ? 'Disponible' : 'Occupé'}
                         </span>
                     </div>
-                    <div class="card-price">${room.prix_nuit} €<small>/nuit</small></div>
+                    <div class="card-price">${room.prix_nuit} Ariary<small>/nuit</small></div>
                 </div>
                 <div class="card-body">
                     <div class="card-subtitle">${room.type}</div>

@@ -225,7 +225,7 @@ const Booking = {
                         </div>
                         <div class="summary-card-body">
                             <div class="price-large">
-                                <span class="price-value">${esc(parseFloat(room.prix_nuit).toFixed(0))} €</span>
+                                <span class="price-value">${esc(parseFloat(room.prix_nuit).toFixed(0))} Ariary</span>
                                 <span class="price-unit">/ nuit</span>
                             </div>
                             <p class="text-xs text-secondary text-center mb-4">Taxes et TVA incluses · Paiement sécurisé</p>
@@ -286,7 +286,7 @@ const Booking = {
 
             if (nights > 0) {
                 const total = nights * this.currentRoom.prix_nuit;
-                priceEl.textContent = `${total} € (${nights} nuits)`;
+                priceEl.textContent = `${total} Ariary (${nights} nuits)`;
             } else {
                 priceEl.textContent = 'Dates invalides';
             }

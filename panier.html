@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paiement &amp; Confirmation | Célestia Hotel</title>
-    <meta name="description" content="Finalisez votre paiement en toute sécurité pour votre réservation au Célestia Hotel.">
+    <meta name="description"
+        content="Finalisez votre paiement en toute sécurité pour votre réservation au Célestia Hotel.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/pages.css">
@@ -82,17 +83,23 @@
                 <div>
                     <h4>Contact</h4>
                     <ul>
-                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
-                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
-                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs,
+                                Paris</a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45
+                                67 89</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span
+                                    class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4>Suivez-nous</h4>
                     <div class="social-links">
-                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
-                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
-                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
+                        <a href="#" class="social-btn" aria-label="Facebook"><span
+                                class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span
+                                class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span
+                                class="material-symbols-outlined">share</span></a>
                     </div>
                 </div>
             </div>
@@ -176,15 +183,15 @@
                                 </div>
                                 <div class="res-row">
                                     <span class="res-label">Arrivée</span>
-                                    <span class="res-value">${new Date(r.date_debut).toLocaleDateString('fr-FR', {weekday:'long',day:'numeric',month:'long',year:'numeric'})} à ${r.heure_arrivee ? r.heure_arrivee.substring(0,5) : '15:00'}</span>
+                                    <span class="res-value">${new Date(r.date_debut).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} à ${r.heure_arrivee ? r.heure_arrivee.substring(0, 5) : '15:00'}</span>
                                 </div>
                                 <div class="res-row">
                                     <span class="res-label">Départ</span>
-                                    <span class="res-value">${new Date(r.date_fin).toLocaleDateString('fr-FR', {weekday:'long',day:'numeric',month:'long',year:'numeric'})} à ${r.heure_depart ? r.heure_depart.substring(0,5) : '11:00'}</span>
+                                    <span class="res-value">${new Date(r.date_fin).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} à ${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'}</span>
                                 </div>
                                 <div class="res-total-row">
                                     <span class="res-total-label">Montant payé</span>
-                                    <span class="res-total-price total-price">${r.montant_total} €</span>
+                                    <span class="res-total-price total-price">${r.montant_total} Ariary</span>
                                 </div>
                             </div>
                         </div>
@@ -271,9 +278,9 @@
                             </div>
                         </div>
                         ${r.image_url
-                            ? `<img src="${r.image_url}" class="reservation-summary-image" alt="Chambre ${r.type}">`
-                            : '<div style="height:120px;background:linear-gradient(135deg,var(--color-gray-100),var(--color-beige));display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined" style="font-size:3rem;color:var(--color-gray-300);">hotel</span></div>'
-                        }
+                    ? `<img src="${r.image_url}" class="reservation-summary-image" alt="Chambre ${r.type}">`
+                    : '<div style="height:120px;background:linear-gradient(135deg,var(--color-gray-100),var(--color-beige));display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined" style="font-size:3rem;color:var(--color-gray-300);">hotel</span></div>'
+                }
                         <div class="reservation-summary-body">
                             <div class="res-row">
                                 <span class="res-label">Type</span>
@@ -285,15 +292,15 @@
                             </div>
                             <div class="res-row">
                                 <span class="res-label">Arrivée</span>
-                                <span class="res-value">${new Date(r.date_debut).toLocaleDateString('fr-FR')} · ${r.heure_arrivee ? r.heure_arrivee.substring(0,5) : '15:00'}</span>
+                                <span class="res-value">${new Date(r.date_debut).toLocaleDateString('fr-FR')} · ${r.heure_arrivee ? r.heure_arrivee.substring(0, 5) : '15:00'}</span>
                             </div>
                             <div class="res-row">
                                 <span class="res-label">Départ</span>
-                                <span class="res-value">${new Date(r.date_fin).toLocaleDateString('fr-FR')} · ${r.heure_depart ? r.heure_depart.substring(0,5) : '11:00'}</span>
+                                <span class="res-value">${new Date(r.date_fin).toLocaleDateString('fr-FR')} · ${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'}</span>
                             </div>
                             <div class="res-total-row">
                                 <span class="res-total-label">Total</span>
-                                <span class="res-total-price total-price">${r.montant_total} €</span>
+                                <span class="res-total-price total-price">${r.montant_total} Ariary</span>
                             </div>
                         </div>
                     </div>

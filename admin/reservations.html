@@ -18,7 +18,8 @@
             <nav class="admin-sidebar-nav">
                 <a href="index.html"><span class="material-symbols-outlined">analytics</span> Tableau de bord</a>
                 <a href="chambres.html"><span class="material-symbols-outlined">hotel</span> Chambres</a>
-                <a href="reservations.html" class="active"><span class="material-symbols-outlined">calendar_month</span> Réservations</a>
+                <a href="reservations.html" class="active"><span class="material-symbols-outlined">calendar_month</span>
+                    Réservations</a>
                 <a href="clients.html"><span class="material-symbols-outlined">group</span> Clients</a>
                 <a href="paiements.html"><span class="material-symbols-outlined">payments</span> Paiements</a>
             </nav>
@@ -94,7 +95,7 @@
                         <td>${r.prenom} ${r.nom}</td>
                         <td>n°${r.numero} (${r.type})</td>
                         <td><small>${new Date(r.date_debut).toLocaleDateString()} (${r.heure_arrivee ? r.heure_arrivee.substring(0, 5) : '15:00'})<br>${new Date(r.date_fin).toLocaleDateString()} (${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'})</small></td>
-                        <td>${r.montant_total} €</td>
+                        <td>${r.montant_total} Ariary</td>
                         <td>
                             <select class="form-select btn-sm" style="width:auto;" onchange="updateStatus(${r.id_reservation}, this.value)">
                                 <option value="En attente" ${r.statut === 'En attente' ? 'selected' : ''}>En attente</option>
@@ -132,7 +133,7 @@
                             <div>
                                 <b>Arrivée:</b> ${new Date(r.date_debut).toLocaleDateString()} à ${r.heure_arrivee ? r.heure_arrivee.substring(0, 5) : '15:00'}<br>
                                 <b>Départ:</b> ${new Date(r.date_fin).toLocaleDateString()} à ${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'}<br>
-                                <b>Total:</b> ${r.montant_total} €
+                                <b>Total:</b> ${r.montant_total} Ariary
                             </div>
                         </div>
                         <div class="mt-4">

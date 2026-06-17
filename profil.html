@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Profil | Célestia Hotel</title>
-    <meta name="description" content="Gérez votre profil, consultez vos réservations et modifiez vos informations personnelles.">
+    <title>Mon Profil | Diamond Hotel</title>
+    <meta name="description"
+        content="Gérez votre profil, consultez vos réservations et modifiez vos informations personnelles.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/pages.css">
@@ -19,8 +20,8 @@
     <nav class="navbar" id="main-navbar">
         <div class="container">
             <a href="index.html" class="navbar-brand">
-                <div class="brand-icon">C</div>
-                <span>CÉLESTIA <b>HOTEL</b></span>
+                <div class="brand-icon">D</div>
+                <span>DIAMOND <b>HOTEL</b></span>
             </a>
             <div class="hamburger" id="hamburger-btn" role="button" aria-label="Menu" tabindex="0">
                 <span></span><span></span><span></span>
@@ -67,7 +68,8 @@
                         </div>
 
                         <nav class="profil-sidebar-nav" aria-label="Navigation profil">
-                            <button class="profil-nav-btn tab active" data-target="reservations-tab" id="tab-reservations">
+                            <button class="profil-nav-btn tab active" data-target="reservations-tab"
+                                id="tab-reservations">
                                 <span class="material-symbols-outlined">calendar_today</span>
                                 Mes Réservations
                             </button>
@@ -78,7 +80,8 @@
                         </nav>
 
                         <div class="profil-sidebar-footer">
-                            <button class="btn btn-outline btn-block" id="dark-mode-toggle-btn" style="font-size:.8rem;">
+                            <button class="btn btn-outline btn-block" id="dark-mode-toggle-btn"
+                                style="font-size:.8rem;">
                                 🌙 Mode Sombre
                             </button>
                         </div>
@@ -93,7 +96,8 @@
                         <div class="reservations-table-wrap">
                             <div class="reservations-table-header">
                                 <div style="display:flex;align-items:center;gap:.75rem;">
-                                    <span class="material-symbols-outlined" style="color:var(--color-primary);font-size:1.4rem;">hotel</span>
+                                    <span class="material-symbols-outlined"
+                                        style="color:var(--color-primary);font-size:1.4rem;">hotel</span>
                                     <h3>Mes Réservations</h3>
                                 </div>
                                 <span class="reservations-count-badge" id="res-count-badge">—</span>
@@ -134,25 +138,29 @@
                                     <div class="form-row">
                                         <div class="form-group">
                                             <label class="form-label" for="prof-prenom">Prénom</label>
-                                            <input type="text" name="prenom" id="prof-prenom" class="form-input" placeholder="Votre prénom" autocomplete="given-name">
+                                            <input type="text" name="prenom" id="prof-prenom" class="form-input"
+                                                placeholder="Votre prénom" autocomplete="given-name">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label" for="prof-nom">Nom</label>
-                                            <input type="text" name="nom" id="prof-nom" class="form-input" placeholder="Votre nom" autocomplete="family-name">
+                                            <input type="text" name="nom" id="prof-nom" class="form-input"
+                                                placeholder="Votre nom" autocomplete="family-name">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label" for="prof-email">Adresse e-mail</label>
                                         <div class="input-with-icon">
                                             <span class="material-symbols-outlined input-icon">mail</span>
-                                            <input type="email" name="email" id="prof-email" class="form-input" placeholder="votre@email.com" autocomplete="email">
+                                            <input type="email" name="email" id="prof-email" class="form-input"
+                                                placeholder="votre@email.com" autocomplete="email">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label" for="prof-tel">Téléphone</label>
                                         <div class="input-with-icon">
                                             <span class="material-symbols-outlined input-icon">call</span>
-                                            <input type="tel" name="telephone" id="prof-tel" class="form-input" placeholder="+33 6 XX XX XX XX" autocomplete="tel">
+                                            <input type="tel" name="telephone" id="prof-tel" class="form-input"
+                                                placeholder="+33 6 XX XX XX XX" autocomplete="tel">
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary" id="save-profile-btn">
@@ -175,10 +183,11 @@
                                         <label class="form-label" for="prof-curr">Mot de passe actuel</label>
                                         <div style="position:relative;">
                                             <input type="password" name="current_password" id="prof-curr"
-                                                class="form-input" data-validate="required"
-                                                placeholder="••••••••" autocomplete="current-password">
+                                                class="form-input" data-validate="required" placeholder="••••••••"
+                                                autocomplete="current-password">
                                             <button type="button" class="btn-toggle-password"
-                                                onclick="App.togglePassword('prof-curr', this)" aria-label="Afficher/masquer">
+                                                onclick="App.togglePassword('prof-curr', this)"
+                                                aria-label="Afficher/masquer">
                                                 <span class="material-symbols-outlined">visibility</span>
                                             </button>
                                         </div>
@@ -187,11 +196,12 @@
                                         <div class="form-group">
                                             <label class="form-label" for="prof-new">Nouveau mot de passe</label>
                                             <div style="position:relative;">
-                                                <input type="password" name="new_password" id="prof-new" class="form-input"
-                                                    data-validate="required|password"
+                                                <input type="password" name="new_password" id="prof-new"
+                                                    class="form-input" data-validate="required|password"
                                                     placeholder="••••••••" autocomplete="new-password">
                                                 <button type="button" class="btn-toggle-password"
-                                                    onclick="App.togglePassword('prof-new', this)" aria-label="Afficher/masquer">
+                                                    onclick="App.togglePassword('prof-new', this)"
+                                                    aria-label="Afficher/masquer">
                                                     <span class="material-symbols-outlined">visibility</span>
                                                 </button>
                                             </div>
@@ -203,7 +213,8 @@
                                                     class="form-input" data-validate="required|password_confirm"
                                                     placeholder="••••••••" autocomplete="new-password">
                                                 <button type="button" class="btn-toggle-password"
-                                                    onclick="App.togglePassword('prof-conf', this)" aria-label="Afficher/masquer">
+                                                    onclick="App.togglePassword('prof-conf', this)"
+                                                    aria-label="Afficher/masquer">
                                                     <span class="material-symbols-outlined">visibility</span>
                                                 </button>
                                             </div>
@@ -230,7 +241,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <div class="footer-brand">CÉLESTIA <span>HOTEL</span></div>
+                    <div class="footer-brand">DIAMOND <span>HOTEL</span></div>
                     <p>Luxe, calme et volupté. L'adresse de référence pour vos séjours d'affaires et de loisirs.</p>
                 </div>
                 <div>
@@ -244,22 +255,30 @@
                 <div>
                     <h4>Contact</h4>
                     <ul>
-                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
-                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
-                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> Amborovy, Ampazony,
+                                Majunga
+                            </a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +261 34 05
+                                678
+                                90</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span
+                                    class="material-symbols-outlined">mail</span> contact@diamond-hotel.com</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4>Suivez-nous</h4>
                     <div class="social-links">
-                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
-                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
-                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
+                        <a href="#" class="social-btn" aria-label="Facebook"><span
+                                class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span
+                                class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span
+                                class="material-symbols-outlined">share</span></a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Célestia Hotel. Tous droits réservés.</p>
+                <p>&copy; 2026 Diamond Hotel. Tous droits réservés.</p>
                 <div class="flex gap-6">
                     <a href="#">Mentions Légales</a>
                     <a href="#">Confidentialité</a>
@@ -376,7 +395,7 @@
                         <div>au ${new Date(r.date_fin).toLocaleDateString('fr-FR')} à ${r.heure_depart ? r.heure_depart.substring(0, 5) : '11:00'}</div>
                     </td>
                     <td><span class="badge ${getStatutBadge(r.statut)}">${r.statut}</span></td>
-                    <td class="res-table-total">${r.montant_total} €</td>
+                    <td class="res-table-total">${r.montant_total} Ariary</td>
                     <td>
                         <div class="flex gap-2" style="flex-wrap:wrap;">
                             <a href="panier.html?id=${r.id_reservation}" class="btn btn-sm btn-ghost">
@@ -391,9 +410,9 @@
 
         function getStatutBadge(statut) {
             const map = {
-                'Confirmée':  'badge-success',
-                'Annulée':    'badge-error',
-                'Terminée':   'badge-info',
+                'Confirmée': 'badge-success',
+                'Annulée': 'badge-error',
+                'Terminée': 'badge-info',
                 'En attente': 'badge-warning'
             };
             return map[statut] || 'badge-warning';
