@@ -345,8 +345,8 @@ p {
 }
 
 .navbar-brand .brand-icon {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     border-radius: var(--radius);
     display: flex;
@@ -693,7 +693,9 @@ p {
 
 /* ===== PAGE HEADER ===== */
 .page-header {
-    background: linear-gradient(135deg, rgba(11, 19, 41, 0.8), rgba(30, 58, 95, 0.75)), var(--header-bg, url('../assets/img/hero_bg.png'));
+    /*background: linear-gradient(135deg, rgba(11, 19, 41, 0.8), rgba(30, 58, 95, 0.75)), var(--header-bg, url('../assets/img/Reception.png'));*/
+    background: url('../assets/img/164+\ Diamant\ Wallpapers\ _\ Free\ download\ _\ Best\ Collection.jpg');
+
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -799,6 +801,7 @@ p {
         display: flex;
     }
 }
+
 .badge {
     display: inline-flex;
     align-items: center;

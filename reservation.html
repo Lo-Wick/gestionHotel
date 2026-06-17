@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Réserver | Célestia Hotel</title>
-    <meta name="description" content="Finalisez votre réservation au Célestia Hotel. Choisissez vos dates, horaires et options pour un séjour d'exception.">
+    <meta name="description"
+        content="Finalisez votre réservation au Célestia Hotel. Choisissez vos dates, horaires et options pour un séjour d'exception.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/pages.css">
@@ -20,8 +21,8 @@
     <nav class="navbar" id="main-navbar">
         <div class="container">
             <a href="index.html" class="navbar-brand">
-                <div class="brand-icon">C</div>
-                <span>CÉLESTIA <b>HOTEL</b></span>
+                <div class="brand-icon"><img src="assets/img/diamond.png" alt="image diamand"></div>
+                <span>DIAMOND <b>HOTEL</b></span>
             </a>
             <div class="hamburger" id="hamburger-btn" role="button" aria-label="Menu" tabindex="0">
                 <span></span><span></span><span></span>
@@ -104,9 +105,8 @@
                                         </label>
                                         <div class="date-input-wrap">
                                             <span class="material-symbols-outlined date-icon">flight_land</span>
-                                            <input type="date" name="date_debut" id="date_debut"
-                                                class="form-input" data-validate="required" required
-                                                aria-label="Date d'arrivée">
+                                            <input type="date" name="date_debut" id="date_debut" class="form-input"
+                                                data-validate="required" required aria-label="Date d'arrivée">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -115,9 +115,8 @@
                                         </label>
                                         <div class="date-input-wrap">
                                             <span class="material-symbols-outlined date-icon">flight_takeoff</span>
-                                            <input type="date" name="date_fin" id="date_fin"
-                                                class="form-input" data-validate="required" required
-                                                aria-label="Date de départ">
+                                            <input type="date" name="date_fin" id="date_fin" class="form-input"
+                                                data-validate="required" required aria-label="Date de départ">
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +136,8 @@
                                         </label>
                                         <div class="select-wrap">
                                             <span class="material-symbols-outlined select-icon">schedule</span>
-                                            <select name="heure_arrivee" id="heure_arrivee" class="form-select" required>
+                                            <select name="heure_arrivee" id="heure_arrivee" class="form-select"
+                                                required>
                                                 <option value="12:00:00">12:00 — Arrivée anticipée (VIP)</option>
                                                 <option value="13:00:00">13:00 — Arrivée anticipée (VIP)</option>
                                                 <option value="14:00:00">14:00</option>
@@ -216,12 +216,14 @@
                                 </div>
 
                                 <div class="form-group" style="margin-bottom:0;">
-                                    <label class="form-label" for="remarques">Remarques ou demandes particulières</label>
+                                    <label class="form-label" for="remarques">Remarques ou demandes
+                                        particulières</label>
                                     <textarea name="remarques" id="remarques" class="form-textarea"
                                         placeholder="Ex: Arrivée tardive, lit bébé, allergie alimentaire, étage élevé, occasion spéciale…"
                                         aria-describedby="remarques-hint"></textarea>
                                     <span class="form-hint" id="remarques-hint">
-                                        Nous ferons notre possible pour répondre à vos demandes, sous réserve de disponibilité.
+                                        Nous ferons notre possible pour répondre à vos demandes, sous réserve de
+                                        disponibilité.
                                     </span>
                                 </div>
                             </div>
@@ -246,13 +248,17 @@
 
                     <!-- Aperçu chambre -->
                     <div id="room-preview-card" class="room-preview-card slide-up" style="animation-delay:.1s;">
-                        <div style="height:200px;background:linear-gradient(135deg,var(--color-gray-100),var(--color-beige));display:flex;align-items:center;justify-content:center;">
+                        <div
+                            style="height:200px;background:linear-gradient(135deg,var(--color-gray-100),var(--color-beige));display:flex;align-items:center;justify-content:center;">
                             <div class="spinner"></div>
                         </div>
                         <div class="room-preview-body">
-                            <div style="height:14px;background:var(--color-gray-100);border-radius:4px;width:40%;margin-bottom:10px;" class="skeleton"></div>
-                            <div style="height:22px;background:var(--color-gray-100);border-radius:4px;width:70%;margin-bottom:14px;" class="skeleton"></div>
-                            <div style="height:14px;background:var(--color-gray-100);border-radius:4px;width:55%;" class="skeleton"></div>
+                            <div style="height:14px;background:var(--color-gray-100);border-radius:4px;width:40%;margin-bottom:10px;"
+                                class="skeleton"></div>
+                            <div style="height:22px;background:var(--color-gray-100);border-radius:4px;width:70%;margin-bottom:14px;"
+                                class="skeleton"></div>
+                            <div style="height:14px;background:var(--color-gray-100);border-radius:4px;width:55%;"
+                                class="skeleton"></div>
                         </div>
                     </div>
 
@@ -351,17 +357,23 @@
                 <div>
                     <h4>Contact</h4>
                     <ul>
-                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs, Paris</a></li>
-                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45 67 89</a></li>
-                        <li><a href="mailto:contact@celestia-hotel.com"><span class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
+                        <li><a href="#"><span class="material-symbols-outlined">location_on</span> 42 Avenue des Champs,
+                                Paris</a></li>
+                        <li><a href="tel:+33123456789"><span class="material-symbols-outlined">call</span> +33 1 23 45
+                                67 89</a></li>
+                        <li><a href="mailto:contact@celestia-hotel.com"><span
+                                    class="material-symbols-outlined">mail</span> contact@celestia-hotel.com</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4>Suivez-nous</h4>
                     <div class="social-links">
-                        <a href="#" class="social-btn" aria-label="Facebook"><span class="material-symbols-outlined">public</span></a>
-                        <a href="#" class="social-btn" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
-                        <a href="#" class="social-btn" aria-label="Twitter"><span class="material-symbols-outlined">share</span></a>
+                        <a href="#" class="social-btn" aria-label="Facebook"><span
+                                class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><span
+                                class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><span
+                                class="material-symbols-outlined">share</span></a>
                     </div>
                 </div>
             </div>
@@ -384,9 +396,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const roomId    = urlParams.get('id');
-            const start     = urlParams.get('date_debut');
-            const end       = urlParams.get('date_fin');
+            const roomId = urlParams.get('id');
+            const start = urlParams.get('date_debut');
+            const end = urlParams.get('date_fin');
 
             if (!roomId) {
                 notify.warning('Veuillez sélectionner une chambre.');
@@ -405,14 +417,14 @@
 
             document.getElementById('input_room_id').value = roomId;
             if (start) document.getElementById('date_debut').value = start;
-            if (end)   document.getElementById('date_fin').value   = end;
+            if (end) document.getElementById('date_fin').value = end;
 
             Calendar.init('date_debut', { minToday: true, linkedWith: 'date_fin' });
             Calendar.init('date_fin');
 
             // Mise à jour du calcul de nuits à chaque changement de date
             const dateDebut = document.getElementById('date_debut');
-            const dateFin   = document.getElementById('date_fin');
+            const dateFin = document.getElementById('date_fin');
             [dateDebut, dateFin].forEach(el => el.addEventListener('change', updateNightsDisplay));
             updateNightsDisplay();
 
@@ -475,14 +487,14 @@
             const datesEl = document.getElementById('nights-dates-display');
 
             if (d1 && d2) {
-                const start  = new Date(d1);
-                const end    = new Date(d2);
+                const start = new Date(d1);
+                const end = new Date(d2);
                 const nights = Math.ceil((end - start) / 86400000);
 
                 if (nights > 0 && row) {
                     row.style.display = 'flex';
                     countEl.textContent = `${nights} nuit${nights > 1 ? 's' : ''}`;
-                    datesEl.textContent = `${start.toLocaleDateString('fr-FR', {day:'numeric',month:'short'})} → ${end.toLocaleDateString('fr-FR', {day:'numeric',month:'short'})}`;
+                    datesEl.textContent = `${start.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })} → ${end.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}`;
                 } else if (row) {
                     row.style.display = 'none';
                 }
