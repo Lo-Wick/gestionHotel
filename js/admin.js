@@ -20,7 +20,7 @@ const Admin = {
             const header = document.createElement('div');
             header.className = 'admin-mobile-header';
             header.innerHTML = `
-                <div class="admin-sidebar-brand" style="border:none;margin:0;padding:0;font-size:1rem;">CÉLESTIA ADMIN</div>
+                <div class="admin-sidebar-brand" style="border:none;margin:0;padding:0;font-size:1rem;"></div>
                 <button class="hamburger active" id="admin-hamburger" onclick="Admin.toggleSidebar()">
                     <span></span><span></span><span></span>
                 </button>
